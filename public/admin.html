@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administration — EMMANUEL PRIME X BOT</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#02040e">
+<link rel="icon" type="image/jpeg" href="/bot-small.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#02040e;--card:#070b1f;--line:#14307a;--blue:#1f6bff;--cyan:#35d7ff;--ice:#d6efff;--violet:#6a4dff;
+    --text:#e8f1ff;--muted:#7f92c4;--green:#2ee6a6;--amber:#ffb84d;--red:#ff5d73;--glow:0 0 22px rgba(53,215,255,.4)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;color:var(--text);background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5;
+    background-image:radial-gradient(900px 600px at 85% -5%,rgba(31,107,255,.28),transparent 60%),radial-gradient(700px 500px at 0% 30%,rgba(106,77,255,.2),transparent 60%);
+    background-attachment:fixed}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px 60px}
+  header{padding:20px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:44px;height:44px;border-radius:12px;object-fit:cover;object-position:50% 20%;border:1px solid var(--cyan);box-shadow:var(--glow)}
+  .brand b{font:800 14px Orbitron,sans-serif;letter-spacing:.8px;color:var(--ice)}
+  .brand small{display:block;color:var(--muted);font-size:12px}
+  button,.btn{cursor:pointer;border:0;border-radius:12px;padding:12px 18px;font:600 14px Inter,sans-serif;transition:.15s;color:var(--ice);
+    background:rgba(31,107,255,.1);border:1px solid var(--line);text-decoration:none;display:inline-block}
+  button:hover,.btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:var(--glow)}
+  button:disabled{opacity:.5;cursor:wait}
+  .primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00103a;border:0;font-weight:700}
+  .primary:hover{color:#00103a;filter:brightness(1.1)}
+  .danger{border-color:rgba(255,93,115,.5);color:#ffb3bf}
+  .danger:hover{border-color:var(--red);color:#fff;background:rgba(255,93,115,.18);box-shadow:0 0 18px rgba(255,93,115,.35)}
+  .panel{background:linear-gradient(180deg,rgba(10,16,48,.9),rgba(5,8,26,.92));border:1px solid var(--line);border-radius:20px;padding:22px;
+    box-shadow:0 20px 60px rgba(0,0,0,.55);backdrop-filter:blur(8px)}
+  h1{font:900 24px Orbitron,sans-serif;color:var(--ice);margin:6px 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+  label{display:block;font-weight:600;font-size:14px;margin:0 0 6px;color:var(--ice)}
+  input{width:100%;background:#03061a;border:1px solid var(--line);color:var(--text);padding:14px 15px;border-radius:12px;font-size:16px;outline:none;margin-bottom:14px}
+  input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(53,215,255,.18)}
+  .err{display:none;margin-bottom:14px;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,93,115,.45);background:rgba(255,93,115,.08);color:#ffb3bf;font-size:14px}
+  .ok{display:none;margin-bottom:14px;padding:11px 13px;border-radius:12px;border:1px solid rgba(46,230,166,.45);background:rgba(46,230,166,.08);color:#a8f5d9;font-size:14px}
+  #login{max-width:400px;margin:40px auto}
+  #app{display:none}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+  .stat{background:rgba(7,11,31,.85);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+  .stat b{display:block;font:900 26px Orbitron,sans-serif;color:var(--cyan)}
+  .stat span{color:var(--muted);font-size:13px}
+  .bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+  .list{display:grid;gap:10px}
+  .dev{display:flex;align-items:center;gap:14px;background:rgba(7,11,31,.85);border:1px solid var(--line);border-radius:14px;padding:14px;flex-wrap:wrap}
+  .dev .who{flex:1;min-width:190px}
+  .dev .num{font:700 16px Orbitron,sans-serif;color:var(--ice);word-break:break-all}
+  .dev .meta{color:var(--muted);font-size:13px;margin-top:2px}
+  .badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;font-size:12px;border:1px solid var(--line);color:var(--ice);white-space:nowrap}
+  .badge i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+  .badge.open i{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .badge.connecting i{background:var(--amber)}
+  .badge.closed i{background:var(--red)}
+  .crown{color:var(--amber);font-size:12px;border:1px solid rgba(255,184,77,.5);border-radius:999px;padding:3px 9px;margin-left:8px;white-space:nowrap}
+  .empty{text-align:center;color:var(--muted);padding:30px 10px}
+  @media(max-width:520px){button{width:100%}.dev button{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="/bot-small.jpg" alt="">
+      <div><b>EMMANUEL PRIME X BOT</b><small>Espace administrateur</small></div>
+    </div>
+    <div id="top" style="display:none;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="/">← Site de pairing</a>
+      <button id="logout" type="button">🔒 Déconnexion</button>
+    </div>
+  </header>
+
+  <!-- Connexion admin -->
+  <section id="login" class="panel">
+    <h1>Administration</h1>
+    <p class="sub">Réservé au propriétaire du bot.</p>
+    <form id="f" autocomplete="on">
+      <div class="err" id="lerr"></div>
+      <label for="u">Identifiant</label>
+      <input id="u" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      <label for="p">Mot de passe admin</label>
+      <input id="p" name="password" type="password" autocomplete="current-password" required>
+      <button class="primary" id="lbtn" type="submit" style="width:100%">Se connecter</button>
+    </form>
+  </section>
+
+  <!-- Tableau de bord -->
+  <section id="app">
+    <div class="panel">
+      <h1>Appareils connectés</h1>
+      <p class="sub">Chaque appareil est un numéro WhatsApp qui a lié le bot via le site de pairing.</p>
+      <div class="stats">
+        <div class="stat"><b id="s-on">0</b><span>En ligne</span></div>
+        <div class="stat"><b id="s-all">0</b><span>Au total</span></div>
+      </div>
+      <div class="err" id="err"></div>
+      <div class="ok" id="ok"></div>
+      <div class="bar">
+        <span class="sub" style="margin:0">Mise à jour automatique toutes les 15 s</span>
+        <button id="refresh" type="button">↻ Actualiser</button>
+      </div>
+      <div class="list" id="list"></div>
+    </div>
+    <p class="sub" style="margin-top:14px">Supprimer un appareil prévient la personne sur WhatsApp, retire le bot de ses « Appareils connectés » et efface sa session. Elle pourra se reconnecter plus tard avec un nouveau code.</p>
+  </section>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let timer;
+
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function ago(t){
+  if (!t) return '—';
+  const s = Math.max(0, Math.floor((Date.now() - t) / 1000));
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+  return d ? d + ' j ' + h + ' h' : h ? h + ' h ' + m + ' min' : m + ' min';
+}
+function show(id, msg){ const e = $(id); e.textContent = msg; e.style.display = 'block'; }
+function hide(id){ $(id).style.display = 'none'; }
+
+function showLogin(){ clearInterval(timer); $('app').style.display = 'none'; $('top').style.display = 'none'; $('login').style.display = 'block'; }
+function showApp(){ $('login').style.display = 'none'; $('app').style.display = 'block'; $('top').style.display = 'flex'; }
+
+const LABEL = { open: 'En ligne', connecting: 'Connexion…', closed: 'Hors ligne' };
+
+function render(d){
+  $('s-on').textContent = d.connected;
+  $('s-all').textContent = d.total;
+  const box = $('list');
+  if (!d.devices.length){ box.innerHTML = '<div class="empty">Aucun appareil connecté pour le moment.</div>'; return; }
+  box.innerHTML = d.devices.map(x => `
+    <div class="dev">
+      <div class="who">
+        <div class="num">+${esc(x.number)}${x.main ? '<span class="crown">👑 Principal</span>' : ''}</div>
+        <div class="meta">${x.name ? esc(x.name) + ' • ' : ''}connecté depuis ${esc(ago(x.since))}</div>
+      </div>
+      <span class="badge ${esc(x.status)}"><i></i>${esc(LABEL[x.status] || x.status)}</span>
+      <button class="danger" data-num="${esc(x.number)}" data-main="${x.main ? '1' : ''}" type="button">🗑️ Supprimer</button>
+    </div>`).join('');
+}
+
+async function load(){
+  try{
+    const r = await fetch('/api/admin/devices', { cache: 'no-store' });
+    if (r.status === 401) return showLogin();
+    const d = await r.json();
+    hide('err');
+    showApp();
+    render(d);
+  }catch{
+    show('err', 'Impossible de charger la liste. Vérifie ta connexion.');
+  }
+}
+
+function start(){ load(); clearInterval(timer); timer = setInterval(load, 15000); }
+
+$('f').addEventListener('submit', async (e) => {
+  e.preventDefault(); hide('lerr');
+  $('lbtn').disabled = true;
+  try{
+    const r = await fetch('/api/admin/login', { method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ login: $('u').value.trim(), password: $('p').value }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Connexion impossible.');
+    $('p').value = '';
+    start();
+  }catch(ex){ show('lerr', ex.message); $('p').value = ''; }
+  finally{ $('lbtn').disabled = false; }
+});
+
+$('list').addEventListener('click', async (e) => {
+  const b = e.target.closest('button[data-num]');
+  if (!b) return;
+  const num = b.dataset.num;
+  const msg = b.dataset.main
+    ? 'ATTENTION : c’est le numéro PRINCIPAL du bot (+' + num + ').\nLe supprimer déconnecte le bot principal.\n\nContinuer ?'
+    : 'Déconnecter et supprimer l’appareil +' + num + ' ?\nLa personne sera prévenue sur WhatsApp.';
+  if (!confirm(msg)) return;
+  b.disabled = true; hide('err'); hide('ok');
+  try{
+    const r = await fetch('/api/admin/devices/delete', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ number: num }) });
+    if (r.status === 401) return showLogin();
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Suppression impossible.');
+    show('ok', 'Appareil +' + num + ' supprimé.');
+    load();
+  }catch(ex){ show('err', ex.message); b.disabled = false; }
+});
+
+$('refresh').addEventListener('click', load);
+$('logout').addEventListener('click', async () => { await fetch('/api/admin/logout', { method: 'POST' }).catch(() => {}); showLogin(); });
+
+start();
+</script>
+</body>
+</html>
