@@ -110,6 +110,9 @@
   .code i{align-self:center;color:var(--muted);font-style:normal;font-size:28px}
   .timer{color:var(--muted);font-size:14px}
   .timer b{color:var(--cyan)}
+  .pstate{margin-top:14px;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(31,107,255,.08);font-size:14px}
+  .pstate.ok{border-color:rgba(46,230,166,.5);background:rgba(46,230,166,.08);color:#9ff5d6}
+  .pstate.bad{border-color:rgba(255,93,115,.45);background:rgba(255,93,115,.08);color:#ffb3bf}
 
   h2{font:800 20px Orbitron,sans-serif;margin:46px 0 18px;color:var(--ice);letter-spacing:.8px}
   h2::after{content:"";display:block;width:64px;height:3px;margin-top:10px;border-radius:3px;
@@ -151,6 +154,7 @@
     </div>
     <div class="row" style="align-items:center">
       <span class="pill"><i class="dot" id="dot"></i><span id="state">Connexion…</span></span>
+      <a class="pill" href="/admin">⚙️ Admin</a>
       <a class="pill" href="#" id="logout">🔒 Déconnexion</a>
     </div>
   </header>
@@ -168,7 +172,7 @@
             <input id="number" name="number" type="tel" inputmode="numeric" placeholder="Ex : 242056749511" required minlength="8" maxlength="18">
             <button class="primary" id="btn" type="submit">Obtenir mon code</button>
           </div>
-          <p class="hint">Indicatif du pays + numéro, sans espace ni 0 initial. Exemple Congo : <b>242056749511</b>.</p>
+          <p class="hint">⚠️ Ce numéro doit être <b>celui du téléphone</b> sur lequel tu vas saisir le code. Indicatif du pays + numéro, sans espace ni 0 initial. Exemple Congo : <b>242056749511</b>.</p>
         </form>
         <div class="err" id="err"></div>
 
@@ -179,6 +183,7 @@
             <button class="ghost" id="copy" type="button">📋 Copier le code</button>
             <button class="ghost" id="again" type="button">↻ Nouveau code</button>
           </div>
+          <p class="pstate" id="pstate" role="status" aria-live="polite"></p>
           <p class="timer" style="margin-top:14px">Saisis-le dans WhatsApp avant expiration : <b id="count">2:00</b></p>
         </div>
       </div>
@@ -251,11 +256,36 @@ function startCountdown(sec){
   tick(); timer = setInterval(tick, 500);
 }
 
-function render(code){
+let poll;
+function setState(text, cls){
+  const el = $('pstate');
+  el.textContent = text;
+  el.className = 'pstate' + (cls ? ' ' + cls : '');
+}
+function stopWatch(){ clearInterval(poll); poll = null; }
+function watchPairing(number){
+  stopWatch();
+  setState('⏳ En attente : saisis le code dans WhatsApp…');
+  const started = Date.now();
+  poll = setInterval(async () => {
+    if (Date.now() - started > 6 * 60 * 1000) return stopWatch();
+    try{
+      const r = await fetch('/api/pair/status?number=' + encodeURIComponent(number), { cache: 'no-store' });
+      if (r.status === 401) return (location.href = '/login');
+      const d = await r.json();
+      if (d.state === 'linking') setState('🔗 Code accepté, liaison en cours…');
+      else if (d.state === 'connected'){ setState('✅ Connecté ! Le bot vient de t’écrire sur WhatsApp. Tape .menu', 'ok'); clearInterval(timer); stopWatch(); }
+      else if (d.state === 'failed'){ setState('❌ ' + (d.reason || 'La liaison a échoué.') + ' Demande un nouveau code.', 'bad'); clearInterval(timer); stopWatch(); }
+    }catch(e){ /* on réessaie au prochain tour */ }
+  }, 2000);
+}
+
+function render(code, number){
   const [a, b] = code.split('-');
   $('code').innerHTML = [...a].map(c => `<span>${c}</span>`).join('') + '<i>–</i>' + [...b].map(c => `<span>${c}</span>`).join('');
   result.style.display = 'block';
-  startCountdown(120);
+  startCountdown(240);
+  watchPairing(number);
   result.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -274,7 +304,7 @@ form.addEventListener('submit', async (e) => {
     if (r.status === 401) return (location.href = '/login');
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || 'Erreur inconnue');
-    render(d.code);
+    render(d.code, number);
   } catch (ex) {
     showError(ex.message || 'Impossible de générer le code. Réessaie.');
   } finally {
@@ -289,7 +319,7 @@ $('copy').addEventListener('click', async () => {
   setTimeout(() => $('copy').textContent = '📋 Copier le code', 2000);
 });
 
-$('again').addEventListener('click', () => { result.style.display = 'none'; $('number').focus(); });
+$('again').addEventListener('click', () => { stopWatch(); clearInterval(timer); result.style.display = 'none'; $('number').focus(); });
 
 function fmtUp(s){
   const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
