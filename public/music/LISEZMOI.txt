@@ -1,0 +1,12 @@
+MUSIQUE DU SITE
+===============
+Place ici ton fichier audio, avec exactement ce nom :
+
+    la-vida-carousel.mp3
+
+Le lecteur du site (en bas à droite) apparait automatiquement quand le fichier existe,
+joue en boucle, et garde le choix pause/lecture du visiteur.
+Sans ce fichier, aucun lecteur n'est affiche et le site fonctionne normalement.
+
+Conseils : un MP3 de 128 kbps (3 a 5 Mo) charge vite. Utilise un morceau dont tu as les droits
+ou la licence, surtout si ton site est public.

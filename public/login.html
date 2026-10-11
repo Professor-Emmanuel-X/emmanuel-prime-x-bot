@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion — 𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐏𝐑𝐈𝐌𝐄 𝐗 𝐁𝐎𝐓</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#02040e">
+<link rel="icon" type="image/jpeg" href="/bot-small.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#02040e;--line:#14307a;--blue:#1f6bff;--cyan:#35d7ff;--ice:#d6efff;--violet:#6a4dff;--text:#e8f1ff;--muted:#7f92c4;--glow:0 0 22px rgba(53,215,255,.45)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:grid;place-items:center;padding:20px;color:var(--text);background:var(--bg);overflow:hidden;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background-image:
+      radial-gradient(900px 600px at 85% -5%,rgba(31,107,255,.30),transparent 60%),
+      radial-gradient(700px 500px at 0% 30%,rgba(106,77,255,.22),transparent 60%),
+      radial-gradient(800px 500px at 50% 110%,rgba(53,215,255,.15),transparent 60%)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(rgba(53,215,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(53,215,255,.06) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 75%)}
+  .card{position:relative;width:100%;max-width:400px;border-radius:22px;padding:2px;
+    background:conic-gradient(from var(--a,0deg),var(--blue),var(--cyan),var(--violet),var(--blue));
+    animation:spin 6s linear infinite;box-shadow:0 0 60px rgba(31,107,255,.45)}
+  @property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+  @keyframes spin{to{--a:360deg}}
+  .inner{background:linear-gradient(180deg,#0a1030,#050819);border-radius:20px;padding:28px 24px;text-align:center}
+  .avatar{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;object-fit:cover;object-position:50% 18%;
+    border:2px solid var(--cyan);box-shadow:var(--glow)}
+  h1{font:900 22px Orbitron,sans-serif;letter-spacing:1px;
+    background:linear-gradient(180deg,#fff,var(--ice) 40%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 12px rgba(53,215,255,.45))}
+  p.sub{color:var(--muted);font-size:14px;margin:8px 0 22px}
+  form{text-align:left}
+  label{display:block;font-weight:600;font-size:14px;margin:0 0 6px;color:var(--ice)}
+  input{width:100%;background:#03061a;border:1px solid var(--line);color:var(--text);padding:14px 15px;border-radius:12px;
+    font-size:16px;outline:none;margin-bottom:16px;transition:.15s}
+  input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(53,215,255,.18),var(--glow)}
+  button{width:100%;cursor:pointer;border:0;border-radius:12px;padding:15px;font:700 16px Inter,sans-serif;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00103a;box-shadow:0 8px 28px rgba(31,107,255,.45);transition:.15s}
+  button:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  button:disabled{opacity:.55;cursor:wait;transform:none}
+  .err{display:none;margin-bottom:14px;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,93,115,.45);
+    background:rgba(255,93,115,.08);color:#ffb3bf;font-size:14px}
+  .foot{color:var(--muted);font-size:12px;margin-top:18px}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="inner">
+      <img class="avatar" src="/bot-small.jpg" alt="">
+      <h1>EMMANUEL PRIME X BOT</h1>
+      <p class="sub">Accès réservé — connecte-toi pour obtenir ton code de pairing.</p>
+      <form id="f" autocomplete="on">
+        <div class="err" id="err"></div>
+        <label for="login">Identifiant</label>
+        <input id="login" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+        <label for="pw">Mot de passe</label>
+        <input id="pw" name="password" type="password" autocomplete="current-password" required>
+        <button id="btn" type="submit">Se connecter</button>
+      </form>
+      <p class="foot">𝐏𝐑𝐎𝐅𝐄𝐒𝐒𝐎𝐑 𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐗</p>
+    </div>
+  </main>
+<script>
+const $ = (id) => document.getElementById(id);
+$('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  $('err').style.display = 'none';
+  $('btn').disabled = true; $('btn').textContent = 'Vérification…';
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ login: $('login').value.trim(), password: $('pw').value })
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Connexion impossible.');
+    location.href = '/';
+  } catch (ex) {
+    $('err').textContent = ex.message;
+    $('err').style.display = 'block';
+    $('pw').value = '';
+  } finally {
+    $('btn').disabled = false; $('btn').textContent = 'Se connecter';
+  }
+});
+</script>
+<script src="/player.js" defer></script>
+</body>
+</html>

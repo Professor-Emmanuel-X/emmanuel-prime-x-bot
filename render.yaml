@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: emmanuel-prime-x-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: SITE_LOGIN
+        sync: false
+      - key: SITE_PASSWORD
+        sync: false
+      - key: PREFIX
+        value: "."
+      - key: TZ
+        value: Africa/Brazzaville
+    # Pour garder la session WhatsApp entre les redémarrages (plan payant),
+    # décommente le disque ci-dessous et ajoute la variable DATA_DIR=/var/data
+    # disk:
+    #   name: bot-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
