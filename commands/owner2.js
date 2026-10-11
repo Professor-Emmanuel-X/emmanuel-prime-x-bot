@@ -1,5 +1,5 @@
 const config = require('../config');
-const { digits } = require('../lib/utils');
+const { digits, runtime } = require('../lib/utils');
 const session = require('../lib/session');
 
 const commands = [
@@ -43,12 +43,29 @@ const commands = [
   },
   {
     name: 'sessions',
-    aliases: ['bots', 'connectes'],
-    desc: 'Nombre de bots connectés (owner principal)',
+    aliases: ['bots', 'connectes', 'appareils'],
+    desc: 'Appareils connectés : sessions / sessions delete 242...',
     async run(ctx) {
       if (ctx.sock.sessionNumber !== config.botNumber) return ctx.reply("🚫 Réservé à l'owner principal du bot.");
+      const sub = (ctx.args[0] || '').toLowerCase();
+
+      if (['delete', 'del', 'remove', 'supprimer'].includes(sub)) {
+        const n = (ctx.args[1] || '').replace(/\D/g, '');
+        if (!n) return ctx.reply(`Utilisation : ${ctx.prefix}sessions delete 242XXXXXXXXX`);
+        if (n === config.botNumber) return ctx.reply('🚫 Impossible de supprimer la session principale ici (utilise .logout si tu veux la déconnecter).');
+        await session.adminRemove(n);
+        return ctx.reply(`✅ Appareil ${n} déconnecté et supprimé.`);
+      }
+
+      const list = session.list();
       const s = session.stats();
-      await ctx.reply(`🤖 *Sessions*\n\n✅ Connectées : ${s.connected}\n📦 Total : ${s.total}`);
+      const icon = { open: '🟢', connecting: '🟡', closed: '🔴' };
+      const since = (t) => (t ? runtime((Date.now() - t) / 1000) : '—');
+      await ctx.reply(
+        `🤖 *Appareils connectés*\n✅ ${s.connected} en ligne • 📦 ${s.total} au total\n\n` +
+          (list.map((d, i) => `${i + 1}. ${icon[d.status] || '⚪'} ${d.number}${d.main ? ' 👑' : ''}${d.name ? ` (${d.name})` : ''}\n   ⏱️ ${since(d.since)}`).join('\n') || 'Aucun appareil.') +
+          `\n\nPour en supprimer un : ${ctx.prefix}sessions delete NUMERO`
+      );
     }
   }
 ];
