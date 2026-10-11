@@ -44,6 +44,8 @@ Le fichier `.env` est ignoré par Git : ta clé API ne sera pas publiée. Pense 
 | `OPENROUTER_API_KEY` | Ta clé OpenRouter (commandes IA) |
 | `SITE_LOGIN` | Identifiant pour entrer sur le site |
 | `SITE_PASSWORD` | Mot de passe pour entrer sur le site |
+| `ADMIN_LOGIN` | Identifiant de l'espace admin (`/admin`) |
+| `ADMIN_PASSWORD` | Mot de passe de l'espace admin (différent de celui du site). Tant qu'il n'est pas défini, `/admin` est désactivé |
 | `REPO_URL` | (facultatif) lien de ton dépôt, affiché par `.script` |
 
 4. Clique sur **Create Web Service**. Quand l'état passe à « Live », ouvre l'adresse Render : c'est ton site de pairing.
@@ -55,6 +57,21 @@ Le fichier `.env` est ignoré par Git : ta clé API ne sera pas publiée. Pense 
 3. Copie le code à 8 caractères.
 4. Dans WhatsApp : **Réglages, Appareils connectés, Connecter un appareil, Connecter avec un numéro de téléphone**, puis saisis le code.
 5. Le bot t'envoie un message de confirmation. Tape `.menu`.
+
+### Si WhatsApp répond « Impossible de connecter l'appareil »
+
+Le site affiche maintenant l'état de la liaison en direct sous le code (en attente, liaison en cours, connecté, ou la raison de l'échec). Vérifie dans l'ordre :
+
+1. Le numéro saisi sur le site est **celui du téléphone** où tu entres le code (indicatif + numéro, sans `+`).
+2. Tu utilises le **dernier** code affiché : chaque nouveau clic sur « Obtenir mon code » annule le précédent.
+3. Tu le saisis dans les **4 minutes** (après, le code expire et le site te le dit).
+4. Sur Render, le service est bien **Live** (pas en train de démarrer). Dans les **Logs**, cherche les lignes `[pair ...]` : elles disent si le code a été généré, validé ou refusé.
+5. Si le code est refusé en boucle (401), supprime les anciens appareils liés dans WhatsApp, puis redemande un code.
+
+## Gérer les appareils connectés (admin)
+
+- **Depuis le site** : ouvre `/admin` (bouton « Admin » en haut du site), connecte-toi avec `ADMIN_LOGIN` et `ADMIN_PASSWORD`. Tu vois tous les numéros liés au bot, leur état et leur durée de connexion, et tu peux en supprimer. La personne est prévenue sur WhatsApp et l'appareil disparaît de sa liste « Appareils connectés ».
+- **Depuis WhatsApp** (numéro principal uniquement) : `.sessions` liste les appareils, `.sessions delete 242XXXXXXXXX` en supprime un.
 
 ## 4. Ajouter la musique du site
 

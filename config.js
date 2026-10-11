@@ -9,12 +9,15 @@ module.exports = {
   ownerNumber: '242056749511',
   botNumber: '242056749511',
   telegram: 'https://t.me/emmanuelprimex',
-  repo: process.env.REPO_URL || 'https://github.com/emmanuel_ytb/emmanuel-prime-x-bot',
+  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
   // Accès au site de pairing (à définir dans les variables d'environnement Render)
   siteLogin: process.env.SITE_LOGIN || 'Emmanuelprime',
   sitePassword: process.env.SITE_PASSWORD || 'Emmanuel@2026',
+  // Panneau admin (/admin) : désactivé tant que ADMIN_PASSWORD n'est pas défini
+  adminLogin: process.env.ADMIN_LOGIN || 'Emmanuelprime',
+  adminPassword: process.env.ADMIN_PASSWORD || '',
   menuImage: process.env.MENU_IMAGE || '',
   botImagePath: path.join(__dirname, 'public', 'bot.jpg'),
   stickerPack: '𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐏𝐑𝐈𝐌𝐄 𝐗',

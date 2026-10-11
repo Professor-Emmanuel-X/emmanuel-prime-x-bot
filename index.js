@@ -78,6 +78,48 @@ app.get('/', auth.requireAuth, (_req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+// ----- Administration : voir et supprimer les appareils connectés -----
+app.get('/admin', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+app.post('/api/admin/login', (req, res) => {
+  if (!auth.adminEnabled()) {
+    return res.status(503).json({ error: "L'espace admin est désactivé : définis la variable ADMIN_PASSWORD sur le serveur." });
+  }
+  const ip = req.ip;
+  if (loginBlocked(ip)) {
+    return res.status(429).json({ error: 'Trop de tentatives. Réessaie dans 10 minutes.' });
+  }
+  const { login, password } = req.body || {};
+  if (!auth.checkCredentials(login, password, 'admin')) {
+    loginFailed(ip);
+    return res.status(401).json({ error: 'Identifiant ou mot de passe incorrect.' });
+  }
+  auth.setCookie(req, res, 'admin');
+  res.json({ ok: true });
+});
+
+app.post('/api/admin/logout', (_req, res) => {
+  auth.clearCookie(res, 'admin');
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/devices', auth.requireAdmin, (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({ devices: session.list(), ...session.stats() });
+});
+
+app.post('/api/admin/devices/delete', auth.requireAdmin, async (req, res) => {
+  try {
+    const number = await session.adminRemove(req.body?.number);
+    res.json({ ok: true, number });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message || 'Suppression impossible.' });
+  }
+});
+
 app.get('/api/status', auth.requireAuth, (_req, res) => {
   res.json({
     bot: config.botName,
@@ -87,6 +129,11 @@ app.get('/api/status', auth.requireAuth, (_req, res) => {
     uptime: Math.floor(process.uptime()),
     ...session.stats()
   });
+});
+
+app.get('/api/pair/status', auth.requireAuth, (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.json(session.pairStatus(req.query.number));
 });
 
 app.post('/api/pair', auth.requireAuth, async (req, res) => {
