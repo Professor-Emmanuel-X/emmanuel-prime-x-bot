@@ -1,4 +1,5 @@
 const { fetchJson, translate, truncate } = require('../lib/utils');
+const { animePic } = require('../lib/anime');
 
 async function fr(text, n = 500) {
   if (!text) return '—';
@@ -62,8 +63,8 @@ module.exports = [
     desc: 'Illustration d’anime au hasard',
     category: 'anime',
     async run(ctx) {
-      const d = await fetchJson('https://api.waifu.pics/sfw/waifu');
-      await ctx.sock.sendMessage(ctx.from, { image: { url: d.url }, caption: '🌸 Illustration aléatoire' }, { quoted: ctx.m });
+      const url = await animePic('waifu');
+      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🌸 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {
@@ -72,8 +73,8 @@ module.exports = [
     desc: 'Illustration « neko » au hasard',
     category: 'anime',
     async run(ctx) {
-      const d = await fetchJson('https://api.waifu.pics/sfw/neko');
-      await ctx.sock.sendMessage(ctx.from, { image: { url: d.url }, caption: '🐱 Illustration aléatoire' }, { quoted: ctx.m });
+      const url = await animePic('neko');
+      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🐱 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {

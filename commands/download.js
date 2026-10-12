@@ -20,25 +20,101 @@ async function streamToBuffer(stream) {
   return Buffer.concat(chunks);
 }
 
+let agent;
 function getYtdl() {
-  return require('@distube/ytdl-core');
+  const ytdl = require('@distube/ytdl-core');
+  // Facultatif : cookies YouTube (variable YT_COOKIES, au format JSON) pour passer le contrôle « pas un robot »
+  if (!agent && process.env.YT_COOKIES) {
+    try {
+      agent = ytdl.createAgent(JSON.parse(process.env.YT_COOKIES));
+    } catch (e) {
+      console.error('[play] YT_COOKIES invalide :', e.message);
+    }
+  }
+  return { ytdl, agent };
+}
+
+// Services de secours quand YouTube bloque le serveur (les IP d'hébergeurs sont souvent refusées)
+const PROVIDERS = {
+  audio: [
+    (u) => `https://api.vreden.my.id/api/ytmp3?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.siputzx.my.id/api/d/ytmp3?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.ryzendesu.vip/api/downloader/ytmp3?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.agatz.xyz/api/ytmp3?url=${encodeURIComponent(u)}`
+  ],
+  video: [
+    (u) => `https://api.vreden.my.id/api/ytmp4?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.siputzx.my.id/api/d/ytmp4?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.ryzendesu.vip/api/downloader/ytmp4?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.agatz.xyz/api/ytmp4?url=${encodeURIComponent(u)}`
+  ]
+};
+
+// Cherche un lien de téléchargement dans n'importe quelle réponse JSON
+function findLink(obj, depth = 0) {
+  if (!obj || depth > 5) return null;
+  if (typeof obj === 'string') return /^https?:\/\//i.test(obj) && !/\.(jpe?g|png|webp)(\?|$)/i.test(obj) ? obj : null;
+  const keys = ['download_url', 'downloadUrl', 'download', 'dl', 'link', 'url', 'result', 'data', 'media'];
+  if (typeof obj === 'object') {
+    for (const k of keys) {
+      if (k in obj) {
+        const f = findLink(obj[k], depth + 1);
+        if (f) return f;
+      }
+    }
+    for (const v of Object.values(obj)) {
+      const f = findLink(v, depth + 1);
+      if (f) return f;
+    }
+  }
+  return null;
+}
+
+async function viaProviders(kind, videoUrl) {
+  for (const make of PROVIDERS[kind]) {
+    try {
+      const d = await fetchJson(make(videoUrl), { timeout: 25000 });
+      const link = findLink(d);
+      if (!link) continue;
+      const buf = await getBuffer(link, { timeout: 120000, maxContentLength: 60 * 1024 * 1024 });
+      if (buf.length > 5000) return buf;
+    } catch (e) {
+      console.error(`[play] service de secours refusé (${make('x').split('/')[2]}) :`, e.message);
+    }
+  }
+  return null;
+}
+
+async function getMedia(kind, video) {
+  try {
+    const { ytdl, agent: ag } = getYtdl();
+    const opts =
+      kind === 'audio'
+        ? { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 }
+        : { filter: (f) => f.hasVideo && f.hasAudio && f.container === 'mp4', quality: 'highest', highWaterMark: 1 << 25 };
+    if (ag) opts.agent = ag;
+    return await streamToBuffer(ytdl(video.url, opts));
+  } catch (e) {
+    console.error('[play] YouTube direct refusé :', e.message);
+  }
+  const buf = await viaProviders(kind, video.url);
+  if (!buf) {
+    throw new Error("YouTube bloque le serveur et les services de secours sont indisponibles. Réessaie plus tard, ou essaie une autre musique.");
+  }
+  return buf;
 }
 
 async function sendAudio(ctx, video) {
-  const ytdl = getYtdl();
-  const buf = await streamToBuffer(ytdl(video.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 }));
+  const buf = await getMedia('audio', video);
   await ctx.sock.sendMessage(
     ctx.from,
-    { audio: buf, mimetype: 'audio/mp4', fileName: `${video.title}.mp3` },
+    { audio: buf, mimetype: 'audio/mpeg', fileName: `${video.title}.mp3` },
     { quoted: ctx.m }
   );
 }
 
 async function sendVideo(ctx, video) {
-  const ytdl = getYtdl();
-  const buf = await streamToBuffer(
-    ytdl(video.url, { filter: (f) => f.hasVideo && f.hasAudio && f.container === 'mp4', quality: 'highest', highWaterMark: 1 << 25 })
-  );
+  const buf = await getMedia('video', video);
   await ctx.sock.sendMessage(
     ctx.from,
     { video: buf, caption: `🎬 ${video.title}\n\n_${config.botName}_`, mimetype: 'video/mp4' },
