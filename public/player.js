@@ -111,5 +111,9 @@
   });
   window.addEventListener('pagehide', function () { set(K_POS, String(audio.currentTime)); });
 
-  audio.src = SRC;
+  // On demande au serveur quel fichier audio existe (le nom n'a plus d'importance)
+  fetch('/api/music', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) { audio.src = (d && d.src) || SRC; })
+    .catch(function () { audio.src = SRC; });
 })();
