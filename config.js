@@ -9,7 +9,7 @@ module.exports = {
   ownerNumber: '242056749511',
   botNumber: '242056749511',
   telegram: 'https://t.me/emmanuelprimex',
-  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
+  repo: process.env.REPO_URL || 'https://github.com/emmanuelgame6-ai/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
   // Accès au site de pairing (à définir dans les variables d'environnement Render)
