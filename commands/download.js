@@ -167,14 +167,32 @@ module.exports = [
         ['LRCLib (paroles)', 'https://lrclib.net/api/search?q=a'],
         ['OpenRouter (IA)', 'https://openrouter.ai/api/v1/models'],
         ['YouTube', 'https://www.youtube.com/'],
+        ['JioSaavn (musique)', 'https://saavn.dev/api/search/songs?query=a&limit=1'],
+        ['thecatapi (.cat)', 'https://api.thecatapi.com/v1/images/search'],
+        ['dog.ceo (.dog)', 'https://dog.ceo/api/breeds/image/random'],
+        ['purrbot (animations)', 'https://api.purrbot.site/v2/img/sfw/bite/gif'],
+        ['otakugifs (animations)', 'https://api.otakugifs.xyz/gif?reaction=bite'],
+        ['pollinations (.imagine)', 'https://image.pollinations.ai/prompt/a?width=64&height=64'],
+        ['Jikan (anime)', 'https://api.jikan.moe/v4/anime?q=naruto&limit=1'],
+        ['PokeAPI', 'https://pokeapi.co/api/v2/pokemon/pikachu'],
+        ['wttr.in (météo)', 'https://wttr.in/Brazzaville?format=3'],
+        ['Wikipedia', 'https://fr.wikipedia.org/api/rest_v1/page/summary/Congo'],
+        ['JokeAPI', 'https://v2.jokeapi.dev/joke/Any?safe-mode'],
+        ['meme-api', 'https://meme-api.com/gimme'],
+        ['Google Traduction', 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=hello'],
+        ['Coingecko (.crypto)', 'https://api.coingecko.com/api/v3/ping'],
+        ['restcountries', 'https://restcountries.com/v3.1/name/congo'],
+        ['open.er-api (devises)', 'https://open.er-api.com/v6/latest/USD'],
+        ['dictionaryapi', 'https://api.dictionaryapi.dev/api/v2/entries/en/hello'],
+        ['thum.io (.ssweb)', 'https://image.thum.io/get/https://example.com'],
         ...Object.entries(HOSTS).map(([k, v]) => [`${k} (secours Facebook/Insta/YT)`, v])
       ];
-      await ctx.reply('🧪 Test en cours…');
+      await ctx.reply('🧪 Test en cours (≈ 15 s)…');
       const res = await Promise.all(
         targets.map(async ([label, url]) => {
           const t0 = Date.now();
           try {
-            const r = await axios.get(url, { timeout: 10000, validateStatus: () => true });
+            const r = await axios.get(url, { timeout: 12000, validateStatus: () => true, responseType: 'arraybuffer', maxContentLength: 2 * 1024 * 1024, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EmmanuelPrimeXBot/1.0)' } });
             return `${r.status < 500 ? '✅' : '⚠️'} ${label} — HTTP ${r.status} (${Date.now() - t0} ms)`;
           } catch (e) {
             return `❌ ${label} — ${e.code || e.message}`;

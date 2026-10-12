@@ -34,7 +34,11 @@ const commands = [
     aliases: ['chat-photo', 'randomcat'],
     desc: 'Photo de chat aléatoire',
     async run(ctx) {
-      const img = await getBuffer(`https://cataas.com/cat?t=${Date.now()}`);
+      const { fetchImage } = require('../lib/media');
+      const img = await fetchImage([
+        async () => (await fetchJson('https://api.thecatapi.com/v1/images/search'))?.[0]?.url,
+        `https://cataas.com/cat?type=small&t=${Date.now()}`
+      ]);
       await ctx.sock.sendMessage(ctx.from, { image: img, caption: '🐱 Miaou !' }, { quoted: ctx.m });
     }
   },
