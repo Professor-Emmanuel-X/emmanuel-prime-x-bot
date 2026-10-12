@@ -230,7 +230,7 @@ module.exports = [
   },
   {
     name: 'welcome',
-    aliases: ['goodbye', 'bienvenue'],
+    aliases: ['bienvenue'],
     desc: 'Messages de bienvenue / au revoir',
     category: 'group',
     group: true,

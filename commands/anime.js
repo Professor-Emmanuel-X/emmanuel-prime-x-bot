@@ -78,6 +78,26 @@ module.exports = [
     }
   },
   {
+    name: 'husbando',
+    aliases: ['mari', 'animeboy'],
+    desc: 'Illustration d’un personnage masculin d’anime',
+    category: 'anime',
+    async run(ctx) {
+      const url = await animePic('husbando');
+      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '💙 Illustration aléatoire' }, { quoted: ctx.m });
+    }
+  },
+  {
+    name: 'kitsune',
+    aliases: ['foxgirl', 'renarde'],
+    desc: 'Illustration « kitsune » (fille-renard)',
+    category: 'anime',
+    async run(ctx) {
+      const url = await animePic('kitsune');
+      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🦊 Illustration aléatoire' }, { quoted: ctx.m });
+    }
+  },
+  {
     name: 'pokemon',
     aliases: ['poke', 'pokedex'],
     desc: 'Fiche Pokédex : pokemon pikachu',
