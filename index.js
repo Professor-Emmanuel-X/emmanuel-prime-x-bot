@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const axios = require('axios');
 const config = require('./config');
 const { loadCommands, all } = require('./lib/loader');
@@ -45,6 +46,19 @@ function loginFailed(ip) {
   list.push(now);
   loginHits.set(ip, list);
 }
+
+// Musique du site : prend le premier fichier audio trouvé dans public/music (peu importe son nom)
+app.get('/api/music', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  try {
+    const dir = path.join(__dirname, 'public', 'music');
+    const files = fs.readdirSync(dir).filter((f) => /\.(mp3|m4a|ogg|wav|aac)$/i.test(f)).sort();
+    const preferred = files.find((f) => f === 'la-vida-carousel.mp3') || files[0];
+    res.json({ src: preferred ? `/music/${encodeURIComponent(preferred)}` : null });
+  } catch {
+    res.json({ src: null });
+  }
+});
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
 
