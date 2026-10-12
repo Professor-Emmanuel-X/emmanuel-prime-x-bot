@@ -9,7 +9,7 @@ Bot WhatsApp multi-appareils écrit en JavaScript avec Baileys. Il inclut un **s
 ## Ce que contient le projet
 
 - **Site de pairing** : page de connexion (identifiant + mot de passe), puis formulaire où l'on entre son numéro pour recevoir le code de pairing. Chaque numéro lié a sa propre session et ses propres réglages.
-- **221 commandes**. Tape `.menu` pour les voir toutes.
+- **238 commandes**. Tape `.menu` pour les voir toutes.
 - **IA** via OpenRouter : GPT, Gemini, Claude, DeepSeek, Llama, Mistral, analyse d'image, chatbot automatique, etc.
 - **Protection de groupe** : anti-lien, anti-mots interdits, avertissements, bienvenue, mode AFK, classement des membres actifs.
 - **Musique d'ambiance** sur le site (voir plus bas).
@@ -46,6 +46,8 @@ Le fichier `.env` est ignoré par Git : ta clé API ne sera pas publiée. Pense 
 | `SITE_PASSWORD` | Mot de passe pour entrer sur le site |
 | `ADMIN_LOGIN` | Identifiant de l'espace admin (`/admin`) |
 | `ADMIN_PASSWORD` | Mot de passe de l'espace admin (différent de celui du site). Tant qu'il n'est pas défini, `/admin` est désactivé |
+| `YT_COOKIES` | (facultatif) cookies YouTube au format JSON, si `.play` est bloqué par YouTube |
+| `COBALT_API`, `COBALT_KEY` | (facultatif) ton instance Cobalt pour les téléchargements |
 | `REPO_URL` | (facultatif) lien de ton dépôt, affiché par `.script` |
 
 4. Clique sur **Create Web Service**. Quand l'état passe à « Live », ouvre l'adresse Render : c'est ton site de pairing.
@@ -67,6 +69,16 @@ Le site affiche maintenant l'état de la liaison en direct sous le code (en atte
 3. Tu le saisis dans les **4 minutes** (après, le code expire et le site te le dit).
 4. Sur Render, le service est bien **Live** (pas en train de démarrer). Dans les **Logs**, cherche les lignes `[pair ...]` : elles disent si le code a été généré, validé ou refusé.
 5. Si le code est refusé en boucle (401), supprime les anciens appareils liés dans WhatsApp, puis redemande un code.
+
+## Vérifier que les commandes marchent
+
+Tape `.apitest` (owner) : le bot teste depuis Render chaque service utilisé par les commandes (musique, images, Facebook, Instagram, IA…) et dit lesquels répondent. Si un service est en panne, la commande concernée passe automatiquement au suivant.
+
+## Messages de bienvenue et d'au revoir
+
+- `.welcome on/off` et `.goodbye on/off` activent chaque message séparément.
+- `.setwelcome texte` et `.setgoodbye texte` les personnalisent. Variables : `@user`, `@group`, `@count`, `@desc`, `@prefix`.
+- `.testwelcome` montre un aperçu, `.resetwelcome` / `.resetgoodbye` remettent le texte par défaut.
 
 ## Gérer les appareils connectés (admin)
 
