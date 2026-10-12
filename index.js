@@ -1,11 +1,11 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const axios = require('axios');
 const config = require('./config');
 const { loadCommands, all } = require('./lib/loader');
 const session = require('./lib/session');
 const auth = require('./lib/auth');
+const { findMusic } = require('./lib/site-music');
 
 process.on('unhandledRejection', (e) => console.error('[unhandledRejection]', e?.message || e));
 process.on('uncaughtException', (e) => console.error('[uncaughtException]', e?.message || e));
@@ -47,17 +47,10 @@ function loginFailed(ip) {
   loginHits.set(ip, list);
 }
 
-// Musique du site : prend le premier fichier audio trouvé dans public/music (peu importe son nom)
+// Musique du site : cherche un fichier audio n'importe où dans public/ (music, Musique, audio…)
 app.get('/api/music', (_req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  try {
-    const dir = path.join(__dirname, 'public', 'music');
-    const files = fs.readdirSync(dir).filter((f) => /\.(mp3|m4a|ogg|wav|aac)$/i.test(f)).sort();
-    const preferred = files.find((f) => f === 'la-vida-carousel.mp3') || files[0];
-    res.json({ src: preferred ? `/music/${encodeURIComponent(preferred)}` : null });
-  } catch {
-    res.json({ src: null });
-  }
+  res.json({ src: findMusic(path.join(__dirname, 'public')) });
 });
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
