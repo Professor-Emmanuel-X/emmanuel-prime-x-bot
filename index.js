@@ -7,6 +7,13 @@ const session = require('./lib/session');
 const auth = require('./lib/auth');
 const { findMusic } = require('./lib/site-music');
 
+// La bibliothèque de chiffrement écrit des centaines de lignes « Closing session » dans la console : on les masque
+const _info = console.info.bind(console);
+console.info = (...a) => {
+  if (typeof a[0] === 'string' && /^(Closing session|Opening session|Removing old closed session|Migrating session|Session already)/.test(a[0])) return;
+  _info(...a);
+};
+
 process.on('unhandledRejection', (e) => console.error('[unhandledRejection]', e?.message || e));
 process.on('uncaughtException', (e) => console.error('[uncaughtException]', e?.message || e));
 
