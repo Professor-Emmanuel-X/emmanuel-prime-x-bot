@@ -24,12 +24,13 @@ function greeting() {
   return 'Bonsoir 🌙';
 }
 
-function header(ctx) {
+function buildMenu(ctx) {
   const { prefix, sock, db } = ctx;
   const now = new Date();
   const date = now.toLocaleDateString('fr-FR', { timeZone: config.timezone });
   const time = now.toLocaleTimeString('fr-FR', { timeZone: config.timezone });
-  return (
+
+  let out =
     `╭━━━━〔 ${config.botName} 〕━━━━╮\n` +
     `┃ ${greeting()} @${ctx.senderNum}\n` +
     `┃ 👑 Owner : ${config.ownerName}\n` +
@@ -39,30 +40,17 @@ function header(ctx) {
     `┃ 📅 ${date} • ${time}\n` +
     `┃ 📦 Commandes : ${all.length}\n` +
     `┃ ✈️ ${config.telegram}\n` +
-    `╰━━━━━━━━━━━━━━━━━━━━━╯`
-  );
-}
+    `╰━━━━━━━━━━━━━━━━━━━━━╯\n`;
 
-/** Les listes de commandes, découpées en messages de moins de 3000 caractères. */
-function menuChunks(prefix) {
-  const blocks = [];
   for (const [key, title] of Object.entries(CATS)) {
     const cmds = all.filter((c) => c.category === key && !c.hidden);
     if (!cmds.length) continue;
-    blocks.push(`╭──〔 ${title} 〕\n${cmds.map((c) => `│ ➜ ${prefix}${c.name}`).join('\n')}\n╰──────────────`);
+    out += `\n╭──〔 ${title} 〕\n`;
+    for (const c of cmds) out += `│ ➜ ${prefix}${c.name}\n`;
+    out += '╰──────────────\n';
   }
-  const chunks = [];
-  let cur = '';
-  for (const b of blocks) {
-    if (cur && cur.length + b.length > 2500) {
-      chunks.push(cur);
-      cur = '';
-    }
-    cur += `${cur ? '\n\n' : ''}${b}`;
-  }
-  if (cur) chunks.push(cur);
-  chunks[chunks.length - 1] += `\n\n_${config.botName} • by ${config.ownerName}_`;
-  return chunks;
+  out += `\n_${config.botName} • by ${config.ownerName}_`;
+  return out;
 }
 
 module.exports = [
@@ -72,24 +60,15 @@ module.exports = [
     desc: 'Affiche le menu des commandes',
     category: 'main',
     async run(ctx) {
+      const caption = buildMenu(ctx);
       const mentions = [ctx.sender];
-      const q = { quoted: ctx.m };
-      // Une légende d'image trop longue n'est pas affichée par WhatsApp : on envoie l'image avec l'en-tête seulement,
-      // puis les listes de commandes en messages texte.
-      let sentHeader = false;
       try {
         const img = config.menuImage ? await getBuffer(config.menuImage) : fs.readFileSync(config.botImagePath);
-        await ctx.sock.sendMessage(ctx.from, { image: img, caption: header(ctx), mentions }, q);
-        sentHeader = true;
+        return ctx.sock.sendMessage(ctx.from, { image: img, caption, mentions }, { quoted: ctx.m });
       } catch {
         /* on retombe sur le texte */
       }
-      const chunks = menuChunks(ctx.prefix);
-      if (!sentHeader) chunks[0] = `${header(ctx)}\n\n${chunks[0]}`;
-      for (const text of chunks) {
-        await ctx.sock.sendMessage(ctx.from, { text, mentions }, q);
-        await new Promise((r) => setTimeout(r, 400));
-      }
+      return ctx.sock.sendMessage(ctx.from, { text: caption, mentions }, { quoted: ctx.m });
     }
   },
   {
