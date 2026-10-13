@@ -167,7 +167,6 @@ module.exports = [
         ['LRCLib (paroles)', 'https://lrclib.net/api/search?q=a'],
         ['OpenRouter (IA)', 'https://openrouter.ai/api/v1/models'],
         ['YouTube', 'https://www.youtube.com/'],
-        ['JioSaavn (musique)', 'https://saavn.dev/api/search/songs?query=a&limit=1'],
         ['thecatapi (.cat)', 'https://api.thecatapi.com/v1/images/search'],
         ['dog.ceo (.dog)', 'https://dog.ceo/api/breeds/image/random'],
         ['purrbot (animations)', 'https://api.purrbot.site/v2/img/sfw/bite/gif'],
