@@ -174,10 +174,27 @@ session.restoreAll().then(() => {
   }
 });
 
-// Évite la mise en veille de Render (plan gratuit)
-const selfUrl = process.env.RENDER_EXTERNAL_URL;
+// Évite la mise en veille de Render (plan gratuit) : le serveur s'appelle lui-même toutes les 10 minutes
+// par son adresse publique, ce que Render compte comme une vraie visite.
+const PING_EVERY_MS = 10 * 60 * 1000;
+const selfUrl = (process.env.PING_URL || process.env.RENDER_EXTERNAL_URL || '').replace(/\/$/, '');
 if (selfUrl) {
-  setInterval(() => {
-    axios.get(`${selfUrl}/health`, { timeout: 15000 }).catch(() => {});
-  }, 10 * 60 * 1000);
+  let pings = 0;
+  let fails = 0;
+  const ping = async () => {
+    try {
+      await axios.get(`${selfUrl}/health`, { timeout: 20000 });
+      pings++;
+      fails = 0;
+      if (pings === 1 || pings % 6 === 0) console.log(`[keepalive] ping n°${pings} OK (${selfUrl})`);
+    } catch (e) {
+      fails++;
+      console.error(`[keepalive] ping échoué (${fails}) :`, e.code || e.message);
+    }
+  };
+  setTimeout(ping, 60 * 1000); // premier ping 1 minute après le démarrage
+  setInterval(ping, PING_EVERY_MS);
+  console.log(`[keepalive] auto-ping toutes les 10 minutes sur ${selfUrl}/health`);
+} else {
+  console.log('[keepalive] désactivé (RENDER_EXTERNAL_URL absent). Ajoute la variable PING_URL avec l’adresse de ton site.');
 }
