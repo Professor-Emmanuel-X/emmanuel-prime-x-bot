@@ -172,7 +172,7 @@
             <input id="number" name="number" type="tel" inputmode="numeric" placeholder="Ex : 242056749511" required minlength="8" maxlength="18">
             <button class="primary" id="btn" type="submit">Obtenir mon code</button>
           </div>
-          <p class="hint">⚠️ Ce numéro doit être <b>celui du téléphone</b> sur lequel tu vas saisir le code. Indicatif du pays + numéro, sans espace ni 0 initial. Exemple Congo : <b>242056749511</b>.</p>
+          <p class="hint">⚠️ Ce numéro doit être <b>celui du téléphone</b> sur lequel tu vas saisir le code. Indicatif du pays + numéro, sans espace. Exemple Congo : <b>242056749511</b>. Si tu tapes un numéro local qui commence par 0 (ex : 069158808), l'indicatif <b>242</b> (Congo) est ajouté automatiquement ; pour un autre pays, tape l'indicatif complet.</p>
         </form>
         <div class="err" id="err"></div>
 
@@ -304,7 +304,7 @@ form.addEventListener('submit', async (e) => {
     if (r.status === 401) return (location.href = '/login');
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || 'Erreur inconnue');
-    render(d.code, number);
+    render(d.code, d.number || number);
   } catch (ex) {
     showError(ex.message || 'Impossible de générer le code. Réessaie.');
   } finally {
