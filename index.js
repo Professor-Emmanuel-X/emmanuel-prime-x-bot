@@ -156,8 +156,8 @@ app.post('/api/pair', auth.requireAuth, async (req, res) => {
     return res.status(429).json({ error: 'Trop de demandes. Réessaie dans quelques minutes.' });
   }
   try {
-    const code = await session.requestPairing(req.body?.number);
-    res.json({ code });
+    const { code, number } = await session.requestPairing(req.body?.number);
+    res.json({ code, number });
   } catch (e) {
     console.error('[pair]', e.message);
     res.status(e.status || 500).json({ error: e.message || 'Erreur lors de la génération du code.' });

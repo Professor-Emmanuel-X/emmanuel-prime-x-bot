@@ -4,27 +4,28 @@ const path = require('path');
 const root = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : __dirname;
 
 module.exports = {
-  botName: '𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐏𝐑𝐈𝐌𝐄 𝐗 𝐁𝐎𝐓',
-  ownerName: '𝐏𝐑𝐎𝐅𝐄𝐒𝐒𝐎𝐑 𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐗',
+  botName: '\ud835\udc04\ud835\udc0c\ud835\udc0c\ud835\udc00\ud835\udc0d\ud835\udc14\ud835\udc04\ud835\udc0b \ud835\udc0f\ud835\udc11\ud835\udc08\ud835\udc0c\ud835\udc04 \ud835\udc17 \ud835\udc01\ud835\udc0e\ud835\udc13',
+  ownerName: '\ud835\udc0f\ud835\udc11\ud835\udc0e\ud835\udc05\ud835\udc04\ud835\udc12\ud835\udc12\ud835\udc0e\ud835\udc11 \ud835\udc04\ud835\udc0c\ud835\udc0c\ud835\udc00\ud835\udc0d\ud835\udc14\ud835\udc04\ud835\udc0b \ud835\udc17',
   ownerNumber: '242056749511',
   botNumber: '242056749511',
+  defaultCountryCode: process.env.DEFAULT_COUNTRY_CODE || '242', // ajoute aux numeros saisis au format local (ex : 069158808)
   telegram: 'https://t.me/emmanuelprimex',
-  repo: process.env.REPO_URL || 'https://github.com/emmanuelgame6-ai/emmanuel-prime-x-bot',
+  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
-  // Accès au site de pairing (à définir dans les variables d'environnement Render)
+  // Acces au site de pairing (a definir dans les variables d'environnement Render)
   siteLogin: process.env.SITE_LOGIN || 'Emmanuelprime',
   sitePassword: process.env.SITE_PASSWORD || 'Emmanuel@2026',
-  // Panneau admin (/admin) : désactivé tant que ADMIN_PASSWORD n'est pas défini
+  // Panneau admin (/admin) : desactive tant que ADMIN_PASSWORD n'est pas defini
   adminLogin: process.env.ADMIN_LOGIN || 'Emmanuelprime',
   adminPassword: process.env.ADMIN_PASSWORD || '',
   menuImage: process.env.MENU_IMAGE || '',
   botImagePath: path.join(__dirname, 'public', 'bot.jpg'),
-  stickerPack: '𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐏𝐑𝐈𝐌𝐄 𝐗',
-  stickerAuthor: '𝐏𝐑𝐎𝐅𝐄𝐒𝐒𝐄𝐔𝐑 𝐄𝐌𝐌𝐀𝐍𝐔𝐄𝐋 𝐗',
+  stickerPack: '\ud835\udc04\ud835\udc0c\ud835\udc0c\ud835\udc00\ud835\udc0d\ud835\udc14\ud835\udc04\ud835\udc0b \ud835\udc0f\ud835\udc11\ud835\udc08\ud835\udc0c\ud835\udc04 \ud835\udc17',
+  stickerAuthor: '\ud835\udc0f\ud835\udc11\ud835\udc0e\ud835\udc05\ud835\udc04\ud835\udc12\ud835\udc12\ud835\udc04\ud835\udc14\ud835\udc11 \ud835\udc04\ud835\udc0c\ud835\udc0c\ud835\udc00\ud835\udc0d\ud835\udc14\ud835\udc04\ud835\udc0b \ud835\udc17',
   timezone: process.env.TZ || 'Africa/Brazzaville',
 
-  // IA (OpenRouter) : la clé se met dans la variable d'environnement OPENROUTER_API_KEY
+  // IA (OpenRouter) : la cle se met dans la variable d'environnement OPENROUTER_API_KEY
   openrouterKey: process.env.OPENROUTER_API_KEY || '',
   aiModels: {
     default: 'openai/gpt-4o-mini',
