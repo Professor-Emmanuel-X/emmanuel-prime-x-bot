@@ -9,7 +9,7 @@ Bot WhatsApp multi-appareils écrit en JavaScript avec Baileys. Il inclut un **s
 ## Ce que contient le projet
 
 - **Site de pairing** : page de connexion (identifiant + mot de passe), puis formulaire où l'on entre son numéro pour recevoir le code de pairing. Chaque numéro lié a sa propre session et ses propres réglages.
-- **238 commandes**. Tape `.menu` pour les voir toutes.
+- **262 commandes**. Tape `.menu` pour les voir toutes.
 - **IA** via OpenRouter : GPT, Gemini, Claude, DeepSeek, Llama, Mistral, analyse d'image, chatbot automatique, etc.
 - **Protection de groupe** : anti-lien, anti-mots interdits, avertissements, bienvenue, mode AFK, classement des membres actifs.
 - **Musique d'ambiance** sur le site (voir plus bas).
