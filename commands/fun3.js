@@ -49,10 +49,34 @@ const REACTS = [
   ['dance', ['danser'], '💃 @A danse avec @B', '💃 @A danse'],
   ['cry', ['pleurer'], '😭 @A pleure à cause de @B', '😭 @A pleure'],
   ['laugh', ['rire'], '😂 @A rit de @B', '😂 @A rit aux éclats'],
-  ['blush', ['rougir'], '😳 @A rougit devant @B', '😳 @A rougit']
+  ['blush', ['rougir'], '😳 @A rougit devant @B', '😳 @A rougit'],
+  ['punch', ['frapper'], '👊 @A donne un coup de poing à @B', '👊 @A frappe dans le vide'],
+  ['kickass', ['coupdepied'], '🦵 @A donne un coup de pied à @B', '🦵 @A donne un coup de pied dans le vide', 'kick'],
+  ['highfive', ['tapemoilacinq'], '🙌 @A tape dans la main de @B', '🙌 @A lève la main pour un high five'],
+  ['handhold', ['maindanslamain'], '🤝 @A prend la main de @B', '🤝 @A tend la main'],
+  ['feed', ['nourrir'], '🍙 @A donne à manger à @B', '🍙 @A mange un bon repas'],
+  ['wink', ['clin'], '😉 @A fait un clin d’œil à @B', '😉 @A fait un clin d’œil'],
+  ['smug', ['fier'], '😏 @A regarde @B d’un air fier', '😏 @A a l’air très fier'],
+  ['shoot', ['pistolet'], '🔫 @A vise @B (pour rire)', '🔫 @A fait le pistolet avec les doigts'],
+  ['facepalm', ['fp'], '🤦 @A est consterné par @B', '🤦 @A se prend la tête dans la main'],
+  ['stare', ['fixer'], '👀 @A fixe @B', '👀 @A fixe le vide'],
+  ['pout', ['bouder'], '😤 @A boude @B', '😤 @A boude'],
+  ['think', ['reflechir'], '🤔 @A réfléchit à propos de @B', '🤔 @A réfléchit'],
+  ['sleep', ['dormir'], '😴 @A s’endort près de @B', '😴 @A s’endort'],
+  ['bored', ['ennui'], '🥱 @A s’ennuie avec @B', '🥱 @A s’ennuie'],
+  ['happy', ['content'], '😄 @A est content avec @B', '😄 @A est très content'],
+  ['smile', ['sourire'], '😊 @A sourit à @B', '😊 @A sourit'],
+  ['thumbsup', ['pouce'], '👍 @A félicite @B', '👍 @A lève le pouce'],
+  ['tickle', ['chatouiller'], '🤭 @A chatouille @B', '🤭 @A chatouille quelqu’un'],
+  ['baka', ['idiot'], '💢 @A traite @B de baka', '💢 Baka !'],
+  ['shrug', ['bof'], '🤷 @A hausse les épaules devant @B', '🤷 @A hausse les épaules'],
+  ['yeet', ['lancer'], '🚀 @A lance @B très loin', '🚀 @A lance tout très loin'],
+  ['peck', ['smack'], '😚 @A fait un petit bisou à @B', '😚 @A envoie un petit bisou'],
+  ['nom', ['miam'], '😋 @A mange avec @B', '😋 @A fait miam'],
+  ['nope', ['non'], '🙅 @A dit non à @B', '🙅 @A dit non']
 ];
 
-const reactCommands = REACTS.map(([name, aliases, withT, alone]) => ({
+const reactCommands = REACTS.map(([name, aliases, withT, alone, api]) => ({
   name,
   aliases,
   desc: `Animation « ${name} » (mentionne quelqu’un)`,
@@ -62,7 +86,7 @@ const reactCommands = REACTS.map(([name, aliases, withT, alone]) => ({
     const a = `@${ctx.senderNum}`;
     const t = target ? withT.replace('@A', a).replace('@B', `@${String(target).split('@')[0]}`) : alone.replace('@A', a);
     const mentions = [ctx.sender, ...(target ? [target] : [])];
-    const g = await animeGif(name === 'nudge' ? 'poke' : name);
+    const g = await animeGif(api || (name === 'nudge' ? 'poke' : name));
     const caption = `${t}${g.anime ? `\n🎞️ ${g.anime}` : ''}`;
     try {
       const mp4 = await gifToMp4(await getBuffer(g.url));

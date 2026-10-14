@@ -173,6 +173,7 @@ module.exports = [
         ['otakugifs (animations)', 'https://api.otakugifs.xyz/gif?reaction=bite'],
         ['pollinations (.imagine)', 'https://image.pollinations.ai/prompt/a?width=64&height=64'],
         ['Jikan (anime)', 'https://api.jikan.moe/v4/anime?q=naruto&limit=1'],
+        ['AniList (secours anime)', 'https://graphql.anilist.co'],
         ['PokeAPI', 'https://pokeapi.co/api/v2/pokemon/pikachu'],
         ['wttr.in (météo)', 'https://wttr.in/Brazzaville?format=3'],
         ['Wikipedia', 'https://fr.wikipedia.org/api/rest_v1/page/summary/Congo'],

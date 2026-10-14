@@ -1,5 +1,6 @@
 const { fetchJson, translate, truncate } = require('../lib/utils');
 const { animePic } = require('../lib/anime');
+const { searchMedia, searchCharacter } = require('../lib/animeinfo');
 
 async function fr(text, n = 500) {
   if (!text) return '—';
@@ -15,8 +16,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       if (!ctx.text) return ctx.reply(`Utilisation : ${ctx.prefix}anime Blue Box`);
-      const d = await fetchJson(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(ctx.text)}&limit=1&sfw=true`);
-      const a = d.data?.[0];
+      const a = await searchMedia('anime', ctx.text);
       if (!a) return ctx.reply('❌ Anime introuvable.');
       await ctx.reply(
         `🎌 *${a.title}*${a.title_japanese ? ` (${a.title_japanese})` : ''}\n\n` +
@@ -32,8 +32,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       if (!ctx.text) return ctx.reply(`Utilisation : ${ctx.prefix}manga One Piece`);
-      const d = await fetchJson(`https://api.jikan.moe/v4/manga?q=${encodeURIComponent(ctx.text)}&limit=1&sfw=true`);
-      const m = d.data?.[0];
+      const m = await searchMedia('manga', ctx.text);
       if (!m) return ctx.reply('❌ Manga introuvable.');
       await ctx.reply(
         `📚 *${m.title}*${m.title_japanese ? ` (${m.title_japanese})` : ''}\n\n` +
@@ -49,8 +48,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       if (!ctx.text) return ctx.reply(`Utilisation : ${ctx.prefix}perso Mikoto`);
-      const d = await fetchJson(`https://api.jikan.moe/v4/characters?q=${encodeURIComponent(ctx.text)}&limit=1`);
-      const c = d.data?.[0];
+      const c = await searchCharacter(ctx.text);
       if (!c) return ctx.reply('❌ Personnage introuvable.');
       await ctx.reply(
         `👤 *${c.name}*${c.name_kanji ? ` (${c.name_kanji})` : ''}\n❤️ Favoris : ${c.favorites?.toLocaleString('fr-FR') || 0}\n\n📝 ${await fr(c.about, 450)}\n\n🔗 ${c.url}`
