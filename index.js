@@ -5,6 +5,7 @@ const config = require('./config');
 const { loadCommands, all } = require('./lib/loader');
 const session = require('./lib/session');
 const auth = require('./lib/auth');
+const bans = require('./lib/bans');
 const { findMusic } = require('./lib/site-music');
 
 // La bibliothèque de chiffrement écrit des centaines de lignes « Closing session » dans la console : on les masque
@@ -131,6 +132,30 @@ app.post('/api/admin/devices/delete', auth.requireAdmin, async (req, res) => {
     res.json({ ok: true, number });
   } catch (e) {
     res.status(e.status || 500).json({ error: e.message || 'Suppression impossible.' });
+  }
+});
+
+// ----- Numéros bannis -----
+app.get('/api/admin/bans', auth.requireAdmin, (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.json({ bans: bans.list() });
+});
+
+app.post('/api/admin/bans/add', auth.requireAdmin, async (req, res) => {
+  try {
+    const number = await session.adminBan(req.body?.number, req.body?.note);
+    res.json({ ok: true, number });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message || 'Bannissement impossible.' });
+  }
+});
+
+app.post('/api/admin/bans/remove', auth.requireAdmin, (req, res) => {
+  try {
+    const number = bans.unban(req.body?.number);
+    res.json({ ok: true, number });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message || 'Débannissement impossible.' });
   }
 });
 

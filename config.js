@@ -10,6 +10,7 @@ module.exports = {
   botNumber: '242056749511',
   defaultCountryCode: process.env.DEFAULT_COUNTRY_CODE || '242', // ajoute aux numeros saisis au format local (ex : 069158808)
   telegram: 'https://t.me/emmanuelprimex',
+  channel: process.env.CHANNEL_URL || 'https://whatsapp.com/channel/0029Vb9GRQFIHphNfTWq1r0U',
   repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
