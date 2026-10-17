@@ -40,6 +40,7 @@ function buildMenu(ctx) {
     `┃ 📅 ${date} • ${time}\n` +
     `┃ 📦 Commandes : ${all.length}\n` +
     `┃ ✈️ ${config.telegram}\n` +
+    `┃ 📢 Chaîne : ${config.channel}\n` +
     `╰━━━━━━━━━━━━━━━━━━━━━╯\n`;
 
   for (const [key, title] of Object.entries(CATS)) {
@@ -123,7 +124,7 @@ module.exports = [
         { contacts: { displayName: config.ownerName, contacts: [{ vcard }] } },
         { quoted: ctx.m }
       );
-      await ctx.reply(`👑 *Owner :* ${config.ownerName}\n📞 wa.me/${config.ownerNumber}\n✈️ Telegram : ${config.telegram}`);
+      await ctx.reply(`👑 *Owner :* ${config.ownerName}\n📞 wa.me/${config.ownerNumber}\n✈️ Telegram : ${config.telegram}\n📢 Chaîne : ${config.channel}`);
     }
   },
   {
@@ -136,13 +137,22 @@ module.exports = [
     }
   },
   {
+    name: 'channel',
+    aliases: ['chaine', 'canal', 'wachannel'],
+    desc: 'Chaîne WhatsApp officielle du bot',
+    category: 'main',
+    async run(ctx) {
+      await ctx.reply(`📢 *Chaîne WhatsApp de ${config.botName}*\n\nRejoins la chaîne pour les nouveautés, les mises à jour et les annonces :\n${config.channel}\n\n👑 ${config.ownerName}`);
+    }
+  },
+  {
     name: 'script',
     aliases: ['repo', 'sc'],
     desc: 'Lien du code source',
     category: 'main',
     hidden: false,
     async run(ctx) {
-      await ctx.reply(`📦 *${config.botName}*\n\n🔗 Repo : ${config.repo}\n👑 ${config.ownerName}\n✈️ ${config.telegram}`);
+      await ctx.reply(`📦 *${config.botName}*\n\n🔗 Repo : ${config.repo}\n👑 ${config.ownerName}\n✈️ ${config.telegram}\n📢 ${config.channel}`);
     }
   },
   {

@@ -51,7 +51,7 @@ module.exports = [
           `• ${all.length} commandes (IA, groupe, outils, téléchargement, fun…)\n` +
           `• Site de pairing code intégré\n` +
           `• Technologie : Node.js + Baileys\n\n` +
-          `✈️ ${config.telegram}\n📦 ${config.repo}`
+          `✈️ ${config.telegram}\n📢 ${config.channel}\n📦 ${config.repo}`
       );
     }
   },
