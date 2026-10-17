@@ -58,6 +58,15 @@
   .badge.connecting i{background:var(--amber)}
   .badge.closed i{background:var(--red)}
   .crown{color:var(--amber);font-size:12px;border:1px solid rgba(255,184,77,.5);border-radius:999px;padding:3px 9px;margin-left:8px;white-space:nowrap}
+  .panel+.panel{margin-top:18px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+  .row input{flex:1;min-width:200px;margin-bottom:0}
+  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  .good{border-color:rgba(46,230,166,.5);color:#a8f5d9}
+  .good:hover{border-color:var(--green);color:#fff;background:rgba(46,230,166,.15);box-shadow:0 0 18px rgba(46,230,166,.3)}
+  .tag{font-size:12px;border:1px solid rgba(255,93,115,.5);color:#ffb3bf;border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .note{color:var(--muted);font-size:13px;margin-top:12px}
+  .note code{background:#03061a;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--ice);word-break:break-all}
   .empty{text-align:center;color:var(--muted);padding:30px 10px}
   @media(max-width:520px){button{width:100%}.dev button{width:100%}}
 </style>
@@ -106,7 +115,19 @@
       </div>
       <div class="list" id="list"></div>
     </div>
-    <p class="sub" style="margin-top:14px">Supprimer un appareil prévient la personne sur WhatsApp, retire le bot de ses « Appareils connectés » et efface sa session. Elle pourra se reconnecter plus tard avec un nouveau code.</p>
+    <div class="panel">
+      <h1>Numéros bannis</h1>
+      <p class="sub">Un numéro banni est déconnecté et ne peut plus lier le bot : le site refuse de lui donner un code. Débannis-le pour qu'il puisse se reconnecter.</p>
+      <div class="err" id="berr"></div>
+      <div class="ok" id="bok"></div>
+      <div class="row">
+        <input id="bnum" type="tel" inputmode="numeric" placeholder="Numéro à bannir, ex : 242069158808" autocomplete="off">
+        <button class="danger" id="badd" type="button">⛔ Bannir ce numéro</button>
+      </div>
+      <div class="list" id="blist" style="margin-top:14px"></div>
+      <p class="note" id="bnote"></p>
+    </div>
+    <p class="sub" style="margin-top:14px">Supprimer un appareil prévient la personne sur WhatsApp, retire le bot de ses « Appareils connectés » et efface sa session. Elle pourra se reconnecter plus tard avec un nouveau code. Pour l'en empêcher, utilise « Bannir ».</p>
   </section>
 </div>
 
@@ -141,7 +162,10 @@ function render(d){
         <div class="meta">${x.name ? esc(x.name) + ' • ' : ''}connecté depuis ${esc(ago(x.since))}</div>
       </div>
       <span class="badge ${esc(x.status)}"><i></i>${esc(LABEL[x.status] || x.status)}</span>
-      <button class="danger" data-num="${esc(x.number)}" data-main="${x.main ? '1' : ''}" type="button">🗑️ Supprimer</button>
+      <div class="btns">
+        <button class="danger" data-num="${esc(x.number)}" data-main="${x.main ? '1' : ''}" type="button">🗑️ Supprimer</button>
+        ${x.main ? '' : `<button class="danger" data-ban="${esc(x.number)}" type="button">⛔ Bannir</button>`}
+      </div>
     </div>`).join('');
 }
 
@@ -153,6 +177,7 @@ async function load(){
     hide('err');
     showApp();
     render(d);
+    loadBans();
   }catch{
     show('err', 'Impossible de charger la liste. Vérifie ta connexion.');
   }
@@ -190,6 +215,77 @@ $('list').addEventListener('click', async (e) => {
     if (!r.ok) throw new Error(d.error || 'Suppression impossible.');
     show('ok', 'Appareil +' + num + ' supprimé.');
     load();
+  }catch(ex){ show('err', ex.message); b.disabled = false; }
+});
+
+function renderBans(d){
+  const box = $('blist');
+  if (!d.bans.length) box.innerHTML = '<div class="empty">Aucun numéro banni.</div>';
+  else box.innerHTML = d.bans.map(x => `
+    <div class="dev">
+      <div class="who">
+        <div class="num">+${esc(x.number)}</div>
+        <div class="meta">${x.source === 'env' ? 'Banni via la variable BANNED_NUMBERS (Render)' : 'Banni le ' + esc(x.at ? new Date(x.at).toLocaleString('fr-FR') : '—')}${x.note ? ' • ' + esc(x.note) : ''}</div>
+      </div>
+      <span class="tag">⛔ Banni</span>
+      <button class="good" data-unban="${esc(x.number)}" type="button">✅ Débannir</button>
+    </div>`).join('');
+  const nums = d.bans.map(x => x.number).join(',');
+  $('bnote').innerHTML = nums
+    ? 'Sur l’hébergement gratuit de Render, cette liste est effacée à chaque nouveau déploiement. Pour la rendre permanente, crée la variable <code>BANNED_NUMBERS</code> avec la valeur : <code>' + esc(nums) + '</code>'
+    : 'Sur l’hébergement gratuit de Render, la liste des bannis est effacée à chaque nouveau déploiement. Pour la rendre permanente, ajoute les numéros dans la variable <code>BANNED_NUMBERS</code> (séparés par des virgules).';
+}
+
+async function loadBans(){
+  try{
+    const r = await fetch('/api/admin/bans', { cache: 'no-store' });
+    if (r.status === 401) return showLogin();
+    renderBans(await r.json());
+  }catch{ /* la liste des appareils affiche déjà l'erreur réseau */ }
+}
+
+async function banCall(url, number, note){
+  hide('berr'); hide('bok'); hide('err'); hide('ok');
+  const r = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ number, note }) });
+  if (r.status === 401) { showLogin(); return null; }
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || 'Action impossible.');
+  return d;
+}
+
+$('badd').addEventListener('click', async () => {
+  const n = $('bnum').value.trim();
+  if (!n) return show('berr', 'Entre un numéro.');
+  if (!confirm('Bannir +' + n.replace(/\D/g, '') + ' ?\nSon appareil sera déconnecté et il ne pourra plus lier le bot.')) return;
+  $('badd').disabled = true;
+  try{
+    const d = await banCall('/api/admin/bans/add', n);
+    if (d){ $('bnum').value = ''; show('bok', 'Numéro +' + d.number + ' banni.'); load(); }
+  }catch(ex){ show('berr', ex.message); }
+  finally{ $('badd').disabled = false; }
+});
+
+$('blist').addEventListener('click', async (e) => {
+  const b = e.target.closest('button[data-unban]');
+  if (!b) return;
+  const num = b.dataset.unban;
+  if (!confirm('Débannir +' + num + ' ?\nCette personne pourra de nouveau lier le bot.')) return;
+  b.disabled = true;
+  try{
+    const d = await banCall('/api/admin/bans/remove', num);
+    if (d){ show('bok', 'Numéro +' + d.number + ' débanni : il peut se reconnecter.'); loadBans(); }
+  }catch(ex){ show('berr', ex.message); loadBans(); }
+});
+
+$('list').addEventListener('click', async (e) => {
+  const b = e.target.closest('button[data-ban]');
+  if (!b) return;
+  const num = b.dataset.ban;
+  if (!confirm('Bannir +' + num + ' ?\nL’appareil sera supprimé et ce numéro ne pourra plus se reconnecter au bot.')) return;
+  b.disabled = true;
+  try{
+    const d = await banCall('/api/admin/bans/add', num);
+    if (d){ show('ok', 'Numéro +' + d.number + ' banni et déconnecté.'); load(); }
   }catch(ex){ show('err', ex.message); b.disabled = false; }
 });
 
