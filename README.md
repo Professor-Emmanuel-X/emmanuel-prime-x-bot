@@ -9,7 +9,7 @@ Bot WhatsApp multi-appareils écrit en JavaScript avec Baileys. Il inclut un **s
 ## Ce que contient le projet
 
 - **Site de pairing** : page de connexion (identifiant + mot de passe), puis formulaire où l'on entre son numéro pour recevoir le code de pairing. Chaque numéro lié a sa propre session et ses propres réglages.
-- **268 commandes**. Tape `.menu` pour les voir toutes.
+- **269 commandes**. Tape `.menu` pour les voir toutes.
 - **IA** via OpenRouter : GPT, Gemini, Claude, DeepSeek, Llama, Mistral, analyse d'image, chatbot automatique, etc.
 - **Protection de groupe** : anti-lien, anti-mots interdits, avertissements, bienvenue, mode AFK, classement des membres actifs.
 - **Musique d'ambiance** sur le site (voir plus bas).
@@ -136,3 +136,7 @@ Si tu crées une nouvelle catégorie, ajoute-la aussi dans la liste `CATS` de `c
 
 - À la connexion, le compte lié s'abonne automatiquement aux 3 chaînes du bot (une seule fois par compte). Pour désactiver : variable `AUTO_FOLLOW_CHANNELS=off`. Seule la chaîne du bot (`CHANNEL_URL`) est affichée dans le menu et les commandes ; les 3 chaînes suivies automatiquement se règlent avec `CHANNEL_URLS` (liens séparés par des virgules). `.followchannels` (owner) relance l'abonnement.
 - `.autoreact on/off` : réagit à chaque message reçu avec un emoji au hasard (🌺 🍭 😋 🌈 🍪 🍩 🍫 🍬 🌝 🌠 ✨ 🍡 🍥 🍧 🍿 🍨 🍦…). `.autoreact list` affiche la liste, `.setreact 🌺 🍭 😋` choisit tes emojis, `.resetreact` remet la liste par défaut.
+
+## Musique complète (.play / .song)
+
+Le bot télécharge `yt-dlp` au démarrage et essaie plusieurs « clients » YouTube, puis SoundCloud (morceaux entiers), puis Audius, et en tout dernier recours un extrait de 30 s. `.ytcheck` (owner) montre ce qui fonctionne sur ton hébergement. Si YouTube bloque Render (« Sign in to confirm you're not a bot »), ajoute la variable `YT_COOKIES` (cookies YouTube exportés).

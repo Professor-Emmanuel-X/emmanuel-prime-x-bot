@@ -17,7 +17,7 @@ module.exports = {
     .split(/[,\s]+/)
     .filter(Boolean),
   autoFollowChannels: String(process.env.AUTO_FOLLOW_CHANNELS || 'on').toLowerCase() !== 'off',
-  repo: process.env.REPO_URL || 'https://github.com/emmanuelgame6-ai/emmanuel-prime-x-bot',
+  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
   // Acces au site de pairing (a definir dans les variables d'environnement Render)
@@ -33,7 +33,12 @@ module.exports = {
   timezone: process.env.TZ || 'Africa/Brazzaville',
 
   // IA (OpenRouter) : la cle se met dans la variable d'environnement OPENROUTER_API_KEY
-  openrouterKey: process.env.OPENROUTER_API_KEY || '',
+  openrouterKey:
+    process.env.OPENROUTER_API_KEY ||
+    process.env.OPENROUTER_KEY ||
+    process.env.OPEROUTER_API_KEY ||
+    Object.values(process.env).find((v) => /^sk-or-/.test(String(v).trim())) ||
+    '',
   aiModels: {
     default: 'openai/gpt-4o-mini',
     gpt: 'openai/gpt-4o-mini',

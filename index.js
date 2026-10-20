@@ -193,6 +193,8 @@ app.listen(config.port, () => {
   console.log(`[web] site de pairing sur le port ${config.port}`);
 });
 
+require('./lib/ytdlp').ensure().catch(() => {}); // télécharge yt-dlp en arrière-plan
+
 session.restoreAll().then(() => {
   if (session.stats().total === 0) {
     console.log('[bot] Aucune session. Ouvre le site et entre ton numéro pour obtenir le code de pairing.');
