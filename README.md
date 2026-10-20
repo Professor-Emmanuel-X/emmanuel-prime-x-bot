@@ -9,7 +9,7 @@ Bot WhatsApp multi-appareils écrit en JavaScript avec Baileys. Il inclut un **s
 ## Ce que contient le projet
 
 - **Site de pairing** : page de connexion (identifiant + mot de passe), puis formulaire où l'on entre son numéro pour recevoir le code de pairing. Chaque numéro lié a sa propre session et ses propres réglages.
-- **263 commandes**. Tape `.menu` pour les voir toutes.
+- **268 commandes**. Tape `.menu` pour les voir toutes.
 - **IA** via OpenRouter : GPT, Gemini, Claude, DeepSeek, Llama, Mistral, analyse d'image, chatbot automatique, etc.
 - **Protection de groupe** : anti-lien, anti-mots interdits, avertissements, bienvenue, mode AFK, classement des membres actifs.
 - **Musique d'ambiance** sur le site (voir plus bas).
@@ -131,3 +131,8 @@ Si tu crées une nouvelle catégorie, ajoute-la aussi dans la liste `CATS` de `c
 - Ne mets jamais ta clé API ou ton mot de passe dans un dépôt public : utilise les variables d'environnement.
 - Le site bloque une adresse pendant 10 minutes après 5 mauvais mots de passe.
 - Les commandes sensibles (`.restart`, `.sessions`) sont réservées à l'owner principal, car le serveur est partagé entre toutes les sessions.
+
+## Chaînes WhatsApp et réactions automatiques
+
+- À la connexion, le compte lié s'abonne automatiquement aux 3 chaînes du bot (une seule fois par compte). Pour désactiver : variable `AUTO_FOLLOW_CHANNELS=off`. Seule la chaîne du bot (`CHANNEL_URL`) est affichée dans le menu et les commandes ; les 3 chaînes suivies automatiquement se règlent avec `CHANNEL_URLS` (liens séparés par des virgules). `.followchannels` (owner) relance l'abonnement.
+- `.autoreact on/off` : réagit à chaque message reçu avec un emoji au hasard (🌺 🍭 😋 🌈 🍪 🍩 🍫 🍬 🌝 🌠 ✨ 🍡 🍥 🍧 🍿 🍨 🍦…). `.autoreact list` affiche la liste, `.setreact 🌺 🍭 😋` choisit tes emojis, `.resetreact` remet la liste par défaut.

@@ -10,8 +10,14 @@ module.exports = {
   botNumber: '242056749511',
   defaultCountryCode: process.env.DEFAULT_COUNTRY_CODE || '242', // ajoute aux numeros saisis au format local (ex : 069158808)
   telegram: 'https://t.me/emmanuelprimex',
+  // Chaine WhatsApp du bot : seule celle-ci est affichee (menu, .channel, .owner...)
   channel: process.env.CHANNEL_URL || 'https://whatsapp.com/channel/0029Vb9GRQFIHphNfTWq1r0U',
-  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
+  // Chaines suivies automatiquement a la connexion (non affichees), sauf si AUTO_FOLLOW_CHANNELS=off
+  channels: (process.env.CHANNEL_URLS || 'https://whatsapp.com/channel/0029Vb9GRQFIHphNfTWq1r0U,https://whatsapp.com/channel/0029VbDqX6w0VycIdsJ6e50z,https://whatsapp.com/channel/0029Vb8mNISADTOMR0LH291N')
+    .split(/[,\s]+/)
+    .filter(Boolean),
+  autoFollowChannels: String(process.env.AUTO_FOLLOW_CHANNELS || 'on').toLowerCase() !== 'off',
+  repo: process.env.REPO_URL || 'https://github.com/emmanuelgame6-ai/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
   // Acces au site de pairing (a definir dans les variables d'environnement Render)
