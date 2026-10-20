@@ -57,6 +57,71 @@ module.exports = [
   onOff('anticall', 'Anti-appel', { aliases: ['rejectcall'] }),
   onOff('antidelete', 'Anti-suppression (reçus en privé)', { aliases: ['antidel'] }),
   onOff('autoviewstatus', 'Vue automatique des statuts', { aliases: ['autostatus', 'viewstatus'] }),
+  {
+    name: 'autoreact',
+    aliases: ['reactauto', 'autoreaction'],
+    desc: 'Réagit à chaque message avec un emoji : on / off / list',
+    category: 'owner',
+    owner: true,
+    async run(ctx) {
+      const { emojisOf } = require('../lib/reactions');
+      const s = ctx.db.settings;
+      const v = (ctx.args[0] || '').toLowerCase();
+      if (v === 'list' || v === 'liste') return ctx.reply(`🎭 *Emojis de réaction* (${emojisOf(s).length}) :\n\n${emojisOf(s).join(' ')}`);
+      if (!['on', 'off'].includes(v)) {
+        return ctx.reply(
+          `Utilisation :\n• ${ctx.prefix}autoreact on / off\n• ${ctx.prefix}autoreact list\n• ${ctx.prefix}setreact 🌺 🍭 😋 (choisir tes emojis)\n• ${ctx.prefix}resetreact (liste par défaut)\n\nÉtat : ${s.autoreact ? 'ON' : 'OFF'}`
+        );
+      }
+      s.autoreact = v === 'on';
+      ctx.db.save();
+      await ctx.reply(`🎭 Réaction automatique : *${v.toUpperCase()}*${s.autoreact ? `\nEmojis : ${emojisOf(s).join(' ')}` : ''}`);
+    }
+  },
+  {
+    name: 'setreact',
+    aliases: ['setemojis', 'reactemojis'],
+    desc: 'Choisit les emojis de .autoreact',
+    category: 'owner',
+    owner: true,
+    async run(ctx) {
+      const { parseEmojis } = require('../lib/reactions');
+      const list = parseEmojis(ctx.text);
+      if (!list.length) return ctx.reply(`Utilisation : ${ctx.prefix}setreact 🌺 🍭 😋 🌈 🍪`);
+      ctx.db.settings.reactEmojis = list.slice(0, 40);
+      ctx.db.save();
+      await ctx.reply(`✅ ${list.length} emoji(s) enregistré(s) :\n${list.slice(0, 40).join(' ')}\n\nActive-les avec ${ctx.prefix}autoreact on`);
+    }
+  },
+  {
+    name: 'resetreact',
+    aliases: ['resetemojis'],
+    desc: 'Remet les emojis de .autoreact par défaut',
+    category: 'owner',
+    owner: true,
+    async run(ctx) {
+      const { DEFAULT_EMOJIS } = require('../lib/reactions');
+      ctx.db.settings.reactEmojis = [];
+      ctx.db.save();
+      await ctx.reply(`✅ Liste par défaut rétablie :\n${DEFAULT_EMOJIS.join(' ')}`);
+    }
+  },
+  {
+    name: 'react',
+    aliases: ['reagir'],
+    desc: 'Réagit au message cité avec un emoji',
+    category: 'tools',
+    async run(ctx) {
+      const { parseEmojis } = require('../lib/reactions');
+      const e = parseEmojis(ctx.text)[0];
+      if (!ctx.m.message?.extendedTextMessage?.contextInfo?.stanzaId) return ctx.reply(`Utilisation : réponds à un message avec ${ctx.prefix}react 🌺`);
+      if (!e) return ctx.reply(`Donne un emoji : ${ctx.prefix}react 🌺`);
+      const ci = ctx.m.message.extendedTextMessage.contextInfo;
+      await ctx.sock.sendMessage(ctx.from, {
+        react: { text: e, key: { remoteJid: ctx.from, id: ci.stanzaId, participant: ci.participant, fromMe: false } }
+      });
+    }
+  },
   onOff('autoreactstatus', 'Réaction automatique aux statuts', { aliases: ['reactstatus'] }),
   {
     name: 'settings',
@@ -72,7 +137,7 @@ module.exports = [
           `Préfixe : ${s.prefix}\nMode : ${s.mode}\n\n` +
           `${f(s.autoread)} autoread\n${f(s.autotyping)} autotyping\n${f(s.autorecord)} autorecord\n` +
           `${f(s.alwaysonline)} alwaysonline\n${f(s.anticall)} anticall\n${f(s.antidelete)} antidelete\n` +
-          `${f(s.autoviewstatus)} autoviewstatus\n${f(s.autoreactstatus)} autoreactstatus\n${f(s.chatbot)} chatbot`
+          `${f(s.autoviewstatus)} autoviewstatus\n${f(s.autoreactstatus)} autoreactstatus\n${f(s.autoreact)} autoreact\n${f(s.chatbot)} chatbot`
       );
     }
   },

@@ -146,6 +146,22 @@ module.exports = [
     }
   },
   {
+    name: 'followchannels',
+    aliases: ['suivrechaines', 'abonnerchaines'],
+    desc: 'Abonne ce compte aux chaînes du bot (owner)',
+    category: 'owner',
+    owner: true,
+    async run(ctx) {
+      const { followChannels } = require('../lib/channels');
+      await ctx.reply('⏳ Abonnement aux chaînes en cours…');
+      const r = await followChannels(ctx.sock, { force: true });
+      await ctx.reply(
+        `📢 *Chaînes*\n\n` +
+          r.map((x, i) => `${x.ok ? '✅' : '❌'} Chaîne ${i + 1}${x.ok ? (x.already ? ' (déjà abonné)' : ' : abonné') : ` : ${x.error}`}`).join('\n')
+      );
+    }
+  },
+  {
     name: 'script',
     aliases: ['repo', 'sc'],
     desc: 'Lien du code source',
