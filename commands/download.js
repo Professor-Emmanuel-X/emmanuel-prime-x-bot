@@ -199,7 +199,19 @@ module.exports = [
           }
         })
       );
-      await ctx.reply(`🧪 *Services*\n\n${res.join('\n')}\n\n✅ répond • ❌ injoignable depuis Render\nOpenRouter : clé ${process.env.OPENROUTER_API_KEY ? 'présente' : 'ABSENTE'}`);
+      await ctx.reply(`🧪 *Services*\n\n${res.join('\n')}\n\n✅ répond • ❌ injoignable depuis Render\nOpenRouter : clé ${config.openrouterKey ? 'présente' : 'ABSENTE'}`);
+    }
+  },
+  {
+    name: 'ytcheck',
+    aliases: ['ytest', 'musiccheck'],
+    desc: 'Teste le téléchargement YouTube / SoundCloud (owner)',
+    category: 'owner',
+    owner: true,
+    async run(ctx) {
+      await ctx.reply('🧪 Test yt-dlp en cours (≈ 30 s)…');
+      const lines = await require('../lib/ytdlp').check();
+      await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi tous les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons complètes viendront de SoundCloud. Pour débloquer YouTube : variable YT_COOKIES.`);
     }
   },
   {
