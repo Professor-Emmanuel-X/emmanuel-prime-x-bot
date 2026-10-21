@@ -3,7 +3,8 @@ const axios = require('axios');
 const config = require('../config');
 const { fetchJson, getBuffer, extractUrl } = require('../lib/utils');
 const { download, sniff, HOSTS } = require('../lib/dl');
-const { findVideo, getSong, ytdlBuffer } = require('../lib/music');
+const { findVideo, getSong, identify, ytdlBuffer } = require('../lib/music');
+const ytdlp = require('../lib/ytdlp');
 
 const kb = (n) => `${(n / 1048576).toFixed(1)} Mo`;
 
@@ -18,27 +19,32 @@ async function sendMedia(ctx, item, caption = '') {
 }
 
 async function sendSong(ctx, query, asDocument) {
-  const song = await getSong(query);
+  const q = { quoted: ctx.m };
+  const cardText = (i) => `🎵 *${i.title}*\n👤 ${i.artist || 'Inconnu'}${i.duration ? `\n⏱️ ${i.duration}` : ''}`;
+  let card = null;
+  const sendCard = (info) => {
+    if (card) return card;
+    const text = cardText(info);
+    card = (info.thumb ? ctx.sock.sendMessage(ctx.from, { image: { url: info.thumb }, caption: text }, q).catch(() => ctx.reply(text)) : ctx.reply(text)).catch(() => {});
+    return card;
+  };
+  // La fiche (titre, artiste, pochette) part dès que le morceau est identifié, pendant que le fichier se télécharge
+  const song = await getSong(query, sendCard);
+  sendCard(song);
+  await card;
+  if (!song.full) await ctx.reply('⚠️ Extrait officiel de 30 secondes : la chanson complète est indisponible pour le moment.');
   const isMp4 = song.buffer.slice(4, 8).toString() === 'ftyp';
   const mimetype = isMp4 ? 'audio/mp4' : 'audio/mpeg';
-  const info =
-    `🎵 *${song.title}*\n👤 ${song.artist || 'Inconnu'}` +
-    (song.duration ? `\n⏱️ ${song.duration}` : '') +
-    (song.url ? `\n🔗 ${song.url}` : '') +
-    (song.full ? '' : '\n\n⚠️ Extrait de 30 secondes (le morceau complet est indisponible pour le moment).');
-  if (song.thumb) {
-    await ctx.sock.sendMessage(ctx.from, { image: { url: song.thumb }, caption: info }, { quoted: ctx.m }).catch(() => ctx.reply(info));
-  } else {
-    await ctx.reply(info);
-  }
+  const fileName = `${song.artist ? `${song.artist} - ` : ''}${song.title}`.replace(/[\\/:*?"<>|]/g, '').slice(0, 100) + (isMp4 ? '.m4a' : '.mp3');
   if (asDocument) {
-    await ctx.sock.sendMessage(ctx.from, { document: song.buffer, mimetype, fileName: `${song.title}.mp3` }, { quoted: ctx.m });
+    await ctx.sock.sendMessage(ctx.from, { document: song.buffer, mimetype, fileName }, q);
   } else {
-    await ctx.sock.sendMessage(ctx.from, { audio: song.buffer, mimetype, fileName: `${song.title}.mp3` }, { quoted: ctx.m });
+    await ctx.sock.sendMessage(ctx.from, { audio: song.buffer, mimetype, fileName }, q);
   }
 }
 
-function socialCommand({ name, aliases, desc, kind, host, label }) {
+// single : une seule vidéo (ces services proposent souvent la même vidéo en HD et en SD) ; types : types acceptés
+function socialCommand({ name, aliases, desc, kind, host, label, single = false, types = null }) {
   return {
     name,
     aliases,
@@ -48,12 +54,14 @@ function socialCommand({ name, aliases, desc, kind, host, label }) {
       const u = extractUrl(ctx.text || ctx.quoted?.text || '');
       if (!u || !host.test(u)) return ctx.reply(`📥 Utilisation : ${ctx.prefix}${name} ${label}`);
       await ctx.reply('⏳ Téléchargement en cours…');
-      const got = await download(kind, u, { max: 5 });
+      const got = await download(kind, u, { max: single ? 1 : 5, types });
       if (!got?.length) {
         return ctx.reply(`❌ Impossible de télécharger ce lien pour le moment (publication privée, lien invalide ou service indisponible).`);
       }
-      const media = got.filter((g) => g.type !== 'bad');
-      for (const item of media.slice(0, 5)) await sendMedia(ctx, item, '');
+      let media = got.filter((g) => g.type !== 'bad');
+      // Instagram : un reel est souvent renvoyé avec sa miniature → on garde seulement la vidéo
+      if (!single && media.length === 2 && media.some((m) => m.type === 'video') && media.some((m) => m.type === 'image')) media = media.filter((m) => m.type === 'video');
+      for (const item of media.slice(0, single ? 1 : 5)) await sendMedia(ctx, item, '');
     }
   };
 }
@@ -99,19 +107,31 @@ module.exports = [
     category: 'download',
     async run(ctx) {
       if (!ctx.text) return ctx.reply(`Utilisation : ${ctx.prefix}ytmp4 https://youtu.be/...`);
-      const v = await findVideo(ctx.text);
+      const isLink = /(youtube\.com|youtu\.be)/i.test(ctx.text);
+      const canon = isLink ? null : await identify(ctx.text).catch(() => null);
+      const v = await findVideo(ctx.text, canon);
       if (!v) return ctx.reply('❌ Vidéo introuvable.');
       if (v.seconds > 10 * 60) return ctx.reply('⏱️ Vidéo trop longue (10 minutes maximum).');
       await ctx.reply(`⏳ Téléchargement : *${v.title}*`);
       let buf;
+      let why = '';
       try {
         buf = await ytdlBuffer('video', v);
       } catch (e) {
-        console.error('[ytmp4] YouTube direct refusé :', e.message);
-        const got = await download('ytmp4', v.url, { max: 1 });
-        buf = got?.find((g) => g.type === 'video')?.buffer;
+        why = e.message;
+        console.error('[ytmp4] YouTube refusé :', e.message);
+        if (!ytdlp.youtubeBlocked()) {
+          const got = await download('ytmp4', v.url, { max: 1 });
+          buf = got?.find((g) => g.type === 'video')?.buffer;
+        }
       }
-      if (!buf) return ctx.reply("❌ YouTube bloque le serveur pour les vidéos et aucun service de secours n'a répondu. Essaie plus tard.");
+      if (!buf) {
+        return ctx.reply(
+          ytdlp.youtubeBlocked()
+            ? `❌ YouTube bloque l'adresse du serveur (vérification anti-robot), donc les vidéos YouTube ne peuvent pas être téléchargées pour le moment.\n\n👑 Owner : ajoute la variable YT_COOKIES_TXT (cookies YouTube) sur Render, puis tape .ytcheck.`
+            : `❌ Impossible de télécharger cette vidéo (${why.slice(0, 120) || 'aucun service disponible'}). Réessaie plus tard.`
+        );
+      }
       await sendMedia(ctx, { type: 'video', buffer: buf }, `🎬 ${v.title}`);
     }
   },
@@ -131,12 +151,12 @@ module.exports = [
       );
     }
   },
-  socialCommand({ name: 'facebook', aliases: ['fb', 'fbdl'], desc: 'Télécharge une vidéo Facebook', kind: 'facebook', host: /(facebook\.com|fb\.watch|fb\.com)/i, label: 'https://www.facebook.com/...' }),
+  socialCommand({ name: 'facebook', aliases: ['fb', 'fbdl'], desc: 'Télécharge une vidéo Facebook', kind: 'facebook', host: /(facebook\.com|fb\.watch|fb\.com)/i, label: 'https://www.facebook.com/...', single: true, types: ['video'] }),
   socialCommand({ name: 'instagram', aliases: ['ig', 'igdl', 'insta'], desc: 'Télécharge un post / reel Instagram', kind: 'instagram', host: /instagram\.com/i, label: 'https://www.instagram.com/reel/...' }),
-  socialCommand({ name: 'twitter', aliases: ['x', 'twdl', 'xdl'], desc: 'Télécharge une vidéo Twitter / X', kind: 'twitter', host: /(twitter\.com|x\.com)/i, label: 'https://x.com/...' }),
+  socialCommand({ name: 'twitter', aliases: ['x', 'twdl', 'xdl'], desc: 'Télécharge une vidéo Twitter / X', kind: 'twitter', host: /(twitter\.com|x\.com)/i, label: 'https://x.com/...', single: true }),
   socialCommand({ name: 'pinterest', aliases: ['pin', 'pindl'], desc: 'Télécharge une image / vidéo Pinterest', kind: 'pinterest', host: /(pinterest\.|pin\.it)/i, label: 'https://pin.it/...' }),
-  socialCommand({ name: 'mediafire', aliases: ['mf', 'mfdl'], desc: 'Télécharge un fichier MediaFire', kind: 'mediafire', host: /mediafire\.com/i, label: 'https://www.mediafire.com/file/...' }),
-  socialCommand({ name: 'spotify', aliases: ['spotifydl', 'spdl'], desc: 'Télécharge un titre Spotify (lien)', kind: 'spotify', host: /spotify\.com/i, label: 'https://open.spotify.com/track/...' }),
+  socialCommand({ name: 'mediafire', aliases: ['mf', 'mfdl'], desc: 'Télécharge un fichier MediaFire', kind: 'mediafire', host: /mediafire\.com/i, label: 'https://www.mediafire.com/file/...', single: true }),
+  socialCommand({ name: 'spotify', aliases: ['spotifydl', 'spdl'], desc: 'Télécharge un titre Spotify (lien)', kind: 'spotify', host: /spotify\.com/i, label: 'https://open.spotify.com/track/...', single: true }),
   {
     name: 'lyrics',
     aliases: ['paroles', 'lyric'],
@@ -211,7 +231,7 @@ module.exports = [
     async run(ctx) {
       await ctx.reply('🧪 Test yt-dlp en cours (≈ 30 s)…');
       const lines = await require('../lib/ytdlp').check();
-      await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi tous les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons complètes viendront de SoundCloud. Pour débloquer YouTube : variable YT_COOKIES.`);
+      await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons viennent de SoundCloud (choisies avec la fiche officielle) et .ytmp4 ne marche pas. Pour débloquer YouTube (chansons exactes + vidéos) : ajoute la variable YT_COOKIES_TXT sur Render.`);
     }
   },
   {
