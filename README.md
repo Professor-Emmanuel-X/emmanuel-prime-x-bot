@@ -140,3 +140,7 @@ Si tu crées une nouvelle catégorie, ajoute-la aussi dans la liste `CATS` de `c
 ## Musique complète (.play / .song)
 
 Le bot télécharge `yt-dlp` au démarrage et essaie plusieurs « clients » YouTube, puis SoundCloud (morceaux entiers), puis Audius, et en tout dernier recours un extrait de 30 s. `.ytcheck` (owner) montre ce qui fonctionne sur ton hébergement. Si YouTube bloque Render (« Sign in to confirm you're not a bot »), ajoute la variable `YT_COOKIES` (cookies YouTube exportés).
+
+### Débloquer YouTube (.ytmp4 et chansons exactes)
+
+Les serveurs comme Render sont bloqués par YouTube (« Sign in to confirm you're not a bot »). Pour le débloquer : exporte les cookies d'un compte YouTube (format Netscape, fichier `cookies.txt`) et colle tout le contenu dans la variable Render `YT_COOKIES_TXT`. Utilise de préférence un compte Google secondaire. Vérifie ensuite avec `.ytcheck`. Les cookies expirent : il faudra parfois les renouveler.
