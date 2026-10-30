@@ -13,18 +13,18 @@ module.exports = {
   // Chaine WhatsApp du bot : seule celle-ci est affichee (menu, .channel, .owner...)
   channel: process.env.CHANNEL_URL || 'https://whatsapp.com/channel/0029Vb9GRQFIHphNfTWq1r0U',
   // Chaines suivies automatiquement a la connexion (non affichees), sauf si AUTO_FOLLOW_CHANNELS=off
-  channels: (process.env.CHANNEL_URLS || 'https://whatsapp.com/channel/0029Vb9GRQFIHphNfTWq1r0U,https://whatsapp.com/channel/0029VbDqX6w0VycIdsJ6e50z,https://whatsapp.com/channel/0029Vb8mNISADTOMR0LH291N')
+  channels: (process.env.CHANNEL_URLS || 'https://whatsapp.com/channel/0029VbDqX6w0VycIdsJ6e50z,https://whatsapp.com/channel/0029Vb8mNISADTOMR0LH291N,https://whatsapp.com/channel/0029VbDMsSMGzzKaCwobcR1x')
     .split(/[,\s]+/)
     .filter(Boolean),
   autoFollowChannels: String(process.env.AUTO_FOLLOW_CHANNELS || 'on').toLowerCase() !== 'off',
-  repo: process.env.REPO_URL || 'https://github.com/VOTRE-PSEUDO/emmanuel-prime-x-bot',
+  repo: process.env.REPO_URL || 'https://github.com/Professor-Emmanuel-X/emmanuel-prime-x-bot',
   prefix: process.env.PREFIX || '.',
   port: process.env.PORT || 3000,
   // Acces au site de pairing (a definir dans les variables d'environnement Render)
-  siteLogin: process.env.SITE_LOGIN || 'Emmanuelprime',
-  sitePassword: process.env.SITE_PASSWORD || 'Emmanuel@2026',
+  siteLogin: process.env.SITE_LOGIN || '',
+  sitePassword: process.env.SITE_PASSWORD || '',
   // Panneau admin (/admin) : desactive tant que ADMIN_PASSWORD n'est pas defini
-  adminLogin: process.env.ADMIN_LOGIN || 'Emmanuelprime',
+  adminLogin: process.env.ADMIN_LOGIN || '',
   adminPassword: process.env.ADMIN_PASSWORD || '',
   menuImage: process.env.MENU_IMAGE || '',
   botImagePath: path.join(__dirname, 'public', 'bot.jpg'),
