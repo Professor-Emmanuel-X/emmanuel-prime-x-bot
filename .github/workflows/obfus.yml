@@ -1,0 +1,24 @@
+name: Obfuscate
+on: [push]
+permissions:
+  contents: write
+jobs:
+  obf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm install -g javascript-obfuscator
+      - run: |
+          for f in index.js commands/*.js lib/*.js; do
+            if [ -f "$f" ]; then
+              javascript-obfuscator "$f" --output "$f" --compact true --string-array true --control-flow-flattening true
+            fi
+          done
+      - run: |
+          git config user.email "bot@emmanuel.com"
+          git config user.name "Obfuscator"
+          git add .
+          git commit -m "obfuscated" || exit 0
+          git push
