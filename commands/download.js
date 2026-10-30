@@ -239,7 +239,7 @@ module.exports = [
     category: 'owner',
     owner: true,
     async run(ctx) {
-      await ctx.reply('🧪 Test yt-dlp en cours (≈ 30 s)…');
+      await ctx.reply('🧪 Test yt-dlp en cours (≈ 1 à 2 min)…');
       const lines = await require('../lib/ytdlp').check();
       await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons viennent de SoundCloud et .ytmp4 ne marche pas. « The page needs to be reloaded » ou « Failed to extract any player response » avec des cookies présents = cookies refusés par YouTube : réexporte-les depuis une fenêtre privée (voir le message précédent).`);
     }

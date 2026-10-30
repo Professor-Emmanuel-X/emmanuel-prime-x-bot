@@ -62,7 +62,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       const url = await animePic('waifu');
-      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🌸 Illustration aléatoire' }, { quoted: ctx.m });
+      await ctx.sock.sendMessage(ctx.from, { image: url, caption: '🌸 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {
@@ -72,7 +72,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       const url = await animePic('neko');
-      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🐱 Illustration aléatoire' }, { quoted: ctx.m });
+      await ctx.sock.sendMessage(ctx.from, { image: url, caption: '🐱 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {
@@ -82,7 +82,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       const url = await animePic('husbando');
-      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '💙 Illustration aléatoire' }, { quoted: ctx.m });
+      await ctx.sock.sendMessage(ctx.from, { image: url, caption: '💙 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {
@@ -92,7 +92,7 @@ module.exports = [
     category: 'anime',
     async run(ctx) {
       const url = await animePic('kitsune');
-      await ctx.sock.sendMessage(ctx.from, { image: { url }, caption: '🦊 Illustration aléatoire' }, { quoted: ctx.m });
+      await ctx.sock.sendMessage(ctx.from, { image: url, caption: '🦊 Illustration aléatoire' }, { quoted: ctx.m });
     }
   },
   {
