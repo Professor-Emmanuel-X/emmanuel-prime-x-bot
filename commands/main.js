@@ -3,6 +3,7 @@ const fs = require('fs');
 const config = require('../config');
 const { all } = require('../lib/loader');
 const { runtime, formatSize, getBuffer } = require('../lib/utils');
+const { sendWithChannelButton } = require('../lib/channelbtn');
 
 const CATS = {
   main: '🏠 𝐏𝐑𝐈𝐍𝐂𝐈𝐏𝐀𝐋',
@@ -40,7 +41,6 @@ function buildMenu(ctx) {
     `┃ 📅 ${date} • ${time}\n` +
     `┃ 📦 Commandes : ${all.length}\n` +
     `┃ ✈️ ${config.telegram}\n` +
-    `┃ 📢 Chaîne : ${config.channel}\n` +
     `╰━━━━━━━━━━━━━━━━━━━━━╯\n`;
 
   for (const [key, title] of Object.entries(CATS)) {
@@ -63,13 +63,13 @@ module.exports = [
     async run(ctx) {
       const caption = buildMenu(ctx);
       const mentions = [ctx.sender];
+      let image;
       try {
-        const img = config.menuImage ? await getBuffer(config.menuImage) : fs.readFileSync(config.botImagePath);
-        return ctx.sock.sendMessage(ctx.from, { image: img, caption, mentions }, { quoted: ctx.m });
+        image = config.menuImage ? await getBuffer(config.menuImage) : fs.readFileSync(config.botImagePath);
       } catch {
-        /* on retombe sur le texte */
+        /* menu sans image */
       }
-      return ctx.sock.sendMessage(ctx.from, { text: caption, mentions }, { quoted: ctx.m });
+      return sendWithChannelButton(ctx.sock, ctx.from, { image, text: caption, mentions, quoted: ctx.m });
     }
   },
   {
@@ -124,7 +124,7 @@ module.exports = [
         { contacts: { displayName: config.ownerName, contacts: [{ vcard }] } },
         { quoted: ctx.m }
       );
-      await ctx.reply(`👑 *Owner :* ${config.ownerName}\n📞 wa.me/${config.ownerNumber}\n✈️ Telegram : ${config.telegram}\n📢 Chaîne : ${config.channel}`);
+      await sendWithChannelButton(ctx.sock, ctx.from, { text: `👑 *Owner :* ${config.ownerName}\n📞 wa.me/${config.ownerNumber}\n✈️ Telegram : ${config.telegram}`, quoted: ctx.m });
     }
   },
   {
@@ -142,7 +142,7 @@ module.exports = [
     desc: 'Chaîne WhatsApp officielle du bot',
     category: 'main',
     async run(ctx) {
-      await ctx.reply(`📢 *Chaîne WhatsApp de ${config.botName}*\n\nRejoins la chaîne pour les nouveautés, les mises à jour et les annonces :\n${config.channel}\n\n👑 ${config.ownerName}`);
+      await sendWithChannelButton(ctx.sock, ctx.from, { text: `📢 *Chaîne WhatsApp de ${config.botName}*\n\nRejoins la chaîne pour les nouveautés, les mises à jour et les annonces.\n\n👑 ${config.ownerName}`, quoted: ctx.m });
     }
   },
   {
@@ -168,7 +168,7 @@ module.exports = [
     category: 'main',
     hidden: false,
     async run(ctx) {
-      await ctx.reply(`📦 *${config.botName}*\n\n🔗 Repo : ${config.repo}\n👑 ${config.ownerName}\n✈️ ${config.telegram}\n📢 ${config.channel}`);
+      await sendWithChannelButton(ctx.sock, ctx.from, { text: `📦 *${config.botName}*\n\n🔗 Repo : ${config.repo}\n👑 ${config.ownerName}\n✈️ ${config.telegram}`, quoted: ctx.m });
     }
   },
   {

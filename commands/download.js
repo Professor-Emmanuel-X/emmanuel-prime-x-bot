@@ -44,7 +44,7 @@ async function sendSong(ctx, query, asDocument) {
 }
 
 // single : une seule vidéo (ces services proposent souvent la même vidéo en HD et en SD) ; types : types acceptés
-function socialCommand({ name, aliases, desc, kind, host, label, single = false, types = null }) {
+function socialCommand({ name, aliases, desc, kind, host, label, single = false, types = null, viaYtdlp = false }) {
   return {
     name,
     aliases,
@@ -54,7 +54,16 @@ function socialCommand({ name, aliases, desc, kind, host, label, single = false,
       const u = extractUrl(ctx.text || ctx.quoted?.text || '');
       if (!u || !host.test(u)) return ctx.reply(`📥 Utilisation : ${ctx.prefix}${name} ${label}`);
       await ctx.reply('⏳ Téléchargement en cours…');
-      const got = await download(kind, u, { max: single ? 1 : 5, types });
+      let got = await download(kind, u, { max: single ? 1 : 5, types });
+      // Services en ligne en panne : on tente directement avec yt-dlp (vidéos Facebook, Instagram, X, TikTok…)
+      if (!got?.length && viaYtdlp) {
+        try {
+          const buffer = await ytdlp.videoFromAnySite(u);
+          got = [{ buffer, type: sniff(buffer) }];
+        } catch (e) {
+          console.error(`[${name}] yt-dlp :`, e.message);
+        }
+      }
       if (!got?.length) {
         return ctx.reply(`❌ Impossible de télécharger ce lien pour le moment (publication privée, lien invalide ou service indisponible).`);
       }
@@ -151,10 +160,10 @@ module.exports = [
       );
     }
   },
-  socialCommand({ name: 'facebook', aliases: ['fb', 'fbdl'], desc: 'Télécharge une vidéo Facebook', kind: 'facebook', host: /(facebook\.com|fb\.watch|fb\.com)/i, label: 'https://www.facebook.com/...', single: true, types: ['video'] }),
-  socialCommand({ name: 'instagram', aliases: ['ig', 'igdl', 'insta'], desc: 'Télécharge un post / reel Instagram', kind: 'instagram', host: /instagram\.com/i, label: 'https://www.instagram.com/reel/...' }),
-  socialCommand({ name: 'twitter', aliases: ['x', 'twdl', 'xdl'], desc: 'Télécharge une vidéo Twitter / X', kind: 'twitter', host: /(twitter\.com|x\.com)/i, label: 'https://x.com/...', single: true }),
-  socialCommand({ name: 'pinterest', aliases: ['pin', 'pindl'], desc: 'Télécharge une image / vidéo Pinterest', kind: 'pinterest', host: /(pinterest\.|pin\.it)/i, label: 'https://pin.it/...' }),
+  socialCommand({ viaYtdlp: true, name: 'facebook', aliases: ['fb', 'fbdl'], desc: 'Télécharge une vidéo Facebook', kind: 'facebook', host: /(facebook\.com|fb\.watch|fb\.com)/i, label: 'https://www.facebook.com/...', single: true, types: ['video'] }),
+  socialCommand({ viaYtdlp: true, name: 'instagram', aliases: ['ig', 'igdl', 'insta'], desc: 'Télécharge un post / reel Instagram', kind: 'instagram', host: /instagram\.com/i, label: 'https://www.instagram.com/reel/...' }),
+  socialCommand({ viaYtdlp: true, name: 'twitter', aliases: ['x', 'twdl', 'xdl'], desc: 'Télécharge une vidéo Twitter / X', kind: 'twitter', host: /(twitter\.com|x\.com)/i, label: 'https://x.com/...', single: true }),
+  socialCommand({ viaYtdlp: true, name: 'pinterest', aliases: ['pin', 'pindl'], desc: 'Télécharge une image / vidéo Pinterest', kind: 'pinterest', host: /(pinterest\.|pin\.it)/i, label: 'https://pin.it/...' }),
   socialCommand({ name: 'mediafire', aliases: ['mf', 'mfdl'], desc: 'Télécharge un fichier MediaFire', kind: 'mediafire', host: /mediafire\.com/i, label: 'https://www.mediafire.com/file/...', single: true }),
   socialCommand({ name: 'spotify', aliases: ['spotifydl', 'spdl'], desc: 'Télécharge un titre Spotify (lien)', kind: 'spotify', host: /spotify\.com/i, label: 'https://open.spotify.com/track/...', single: true }),
   {
@@ -213,13 +222,14 @@ module.exports = [
           const t0 = Date.now();
           try {
             const r = await axios.get(url, { timeout: 12000, validateStatus: () => true, responseType: 'arraybuffer', maxContentLength: 2 * 1024 * 1024, headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EmmanuelPrimeXBot/1.0)' } });
-            return `${r.status < 500 ? '✅' : '⚠️'} ${label} — HTTP ${r.status} (${Date.now() - t0} ms)`;
+            const icon = r.status >= 500 ? '⚠️' : [401, 403, 429].includes(r.status) ? '🔒' : '✅';
+            return `${icon} ${label} — HTTP ${r.status} (${Date.now() - t0} ms)`;
           } catch (e) {
             return `❌ ${label} — ${e.code || e.message}`;
           }
         })
       );
-      await ctx.reply(`🧪 *Services*\n\n${res.join('\n')}\n\n✅ répond • ❌ injoignable depuis Render\nOpenRouter : clé ${config.openrouterKey ? 'présente' : 'ABSENTE'}`);
+      await ctx.reply(`🧪 *Services*\n\n${res.join('\n')}\n\n✅ répond • 🔒 refuse le serveur (clé ou blocage) • ❌ injoignable depuis Render\nOpenRouter : clé ${config.openrouterKey ? 'présente' : 'ABSENTE'}`);
     }
   },
   {
@@ -231,7 +241,7 @@ module.exports = [
     async run(ctx) {
       await ctx.reply('🧪 Test yt-dlp en cours (≈ 30 s)…');
       const lines = await require('../lib/ytdlp').check();
-      await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons viennent de SoundCloud (choisies avec la fiche officielle) et .ytmp4 ne marche pas. Pour débloquer YouTube (chansons exactes + vidéos) : ajoute la variable YT_COOKIES_TXT sur Render.`);
+      await ctx.reply(`🎵 *Test musique*\n\n${lines.join('\n')}\n\nSi les « YouTube » sont ❌ mais que SoundCloud est ✅, les chansons viennent de SoundCloud et .ytmp4 ne marche pas. « The page needs to be reloaded » ou « Failed to extract any player response » avec des cookies présents = cookies refusés par YouTube : réexporte-les depuis une fenêtre privée (voir le message précédent).`);
     }
   },
   {
