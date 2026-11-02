@@ -1,1 +1,112 @@
-const a0_0x34b67d=a0_0x287e;(function(_0x3c9734,_0x4a4a6e){const _0xfc794b=a0_0x287e,_0x2d767d=_0x3c9734();while(!![]){try{const _0x4a6c63=parseInt(_0xfc794b(0xdf))/0x1*(parseInt(_0xfc794b(0x166))/0x2)+parseInt(_0xfc794b(0x120))/0x3*(-parseInt(_0xfc794b(0x165))/0x4)+-parseInt(_0xfc794b(0x10c))/0x5*(parseInt(_0xfc794b(0x14f))/0x6)+-parseInt(_0xfc794b(0x177))/0x7+-parseInt(_0xfc794b(0x14e))/0x8+parseInt(_0xfc794b(0x161))/0x9+parseInt(_0xfc794b(0xe0))/0xa;if(_0x4a6c63===_0x4a4a6e)break;else _0x2d767d['push'](_0x2d767d['shift']());}catch(_0x4b1262){_0x2d767d['push'](_0x2d767d['shift']());}}}(a0_0x56d0,0xc32fd));function a0_0x49a1(_0x5049c7,_0x3b43b3){const _0xe9a56e={'hIRbU':function(_0xc88b0e,_0x1d7921){return _0xc88b0e-_0x1d7921;}};_0x5049c7=_0xe9a56e['hIRbU'](_0x5049c7,0x9b);const _0x30df83=a0_0x1fde();let _0x1fa45a=_0x30df83[_0x5049c7];return _0x1fa45a;}const a0_0xdff4a5=a0_0x49a1;function a0_0x56d0(){const _0x201843=['euMUC','Écris\x20l\x27horoscope\x20du\x20jour\x20(amour,\x20travail,\x20santé,\x20chance)\x20pour\x20le\x20signe\x20:\x20','🔥\x20*Motivation*','shift','zfjVk','fixcode','Fzibv','Rédige\x20un\x20email\x20professionnel','poem','3NOxnWl','dUpVM','aYtAO','6911990zmJyMw','bgPKw','BfVxj','efzKZ','🐞\x20*Correction\x20de\x20code*','ask','Fexnn','legende','7438PXeZeI','recipe','FiqGI','3451285PfjTtQ','KeIse','LdHmX','VXLvI','.\x20C\x27est\x20uniquement\x20pour\x20le\x20divertissement,\x20avec\x20un\x20ton\x20positif.','HosXr','boost','oFlSN','TkYNW','4764933swQBxY','📸\x20*Légendes*','lGXrS','UloBj','Écris\x20un\x20poème\x20original\x20en\x20français\x20sur\x20:\x20','recette','demander\x20un\x20rendez-vous\x20à\x20mon\x20banquier','1221038zbhMqB','hryST','oVzIW','wlduW','sIBrt','comment\x20fonctionne\x20l\x27internet','EnjhO','catch','KFGCL','🔮\x20*Horoscope\x20du\x20jour*','jmvhx','console.log(\x22a\x22\x20+\x20)','ijGjb','Donne\x20une\x20recette\x20détaillée\x20(ingrédients\x20avec\x20quantités,\x20étapes\x20numérotées,\x20temps\x20de\x20préparation)\x20pour\x20:\x20','AhlPX','Écris\x20une\x20histoire\x20courte\x20(environ\x20250\x20mots)\x20en\x20français\x20sur\x20ce\x20thème\x20:\x20','Corrige\x20un\x20code\x20avec\x20des\x20erreurs','6021072XfNCSG','hRMNX','.\x20Rimes\x20soignées,\x203\x20à\x204\x20strophes.','cRBnf','fcCqN','xWkaj','DZvPj','cyTJd','Donne\x2010\x20idées\x20originales\x20et\x20concrètes\x20pour\x20:\x20','uqjyX','from','QRPZZ','voRwF','motivate','explain','rOlLb','2733496HkimHh','text','🍳\x20*Recette*','Propose\x205\x20légendes\x20courtes\x20et\x20percutantes\x20(avec\x20emojis)\x20pour\x20un\x20post\x20de\x20réseaux\x20sociaux\x20sur\x20:\x20','aiModels','solve','1499520powJss','6WkUxPG','iZSrE','poeme','HHipA','AQzow','URbIY','ArZJq','caption','🧠\x20*Explication*','duBRw','etaUB','explique','Rédige\x20un\x20email\x20professionnel\x20en\x20français\x20(objet\x20+\x20corps\x20du\x20message)\x20pour\x20:\x20','l\x27amour\x20de\x20la\x20patrie','push','zNhHW','story','EQDEY','3778209uApwxJ','IWHeS','gpt4','bADye','4DDPYNk','19238zBMhGN','rDanU','eli5','Résout\x20un\x20problème\x20de\x20maths','ODPum','Donne\x20une\x20recette\x20détaillée','yIoac','cBqHp','cNpuY','sendPresenceUpdate','conte','Mhqdd','Cmxnk','yqJrr','bMItm','../config','20IAQZll','2880493kMAzLc','2120922Gybgtc','8vCKRrK','motivation','ejPYR','Écrit\x20un\x20poème\x20original','fGQbd','DnuZf','Explique\x20un\x20sujet\x20simplement','JnnDV','109TZLSAo','29008610gkvWov','vNBmi','LtMXl','photo\x20de\x20coucher\x20de\x20soleil\x20à\x20la\x20plage','KvZCu','📧\x20*Email*','3576364CKzuNH','rTmqy','yzneM','resoudre','ptenb','JdMCT','redigermail','résoudre\x202x²\x20-\x205x\x20+\x202\x20=\x200','prefix','YKhGE','Trouve\x20et\x20corrige\x20les\x20erreurs\x20dans\x20ce\x20code,\x20explique\x20brièvement\x20chaque\x20correction\x20et\x20donne\x20le\x20code\x20corrigé\x20:\x0a\x0a','UNTyi','sock','Tblvn','MdpOp','peHcL','corrigercode','🪶\x20*Poème*','quoted','composing','dEzfU','Explique\x20simplement,\x20comme\x20à\x20un\x20débutant,\x20avec\x20un\x20exemple\x20concret\x20:\x20','CaNlB','IyeeZ','../lib/ai','horoscop'];a0_0x56d0=function(){return _0x201843;};return a0_0x56d0();}(function(_0xd83944,_0x4c39c4){const _0x3d4619=a0_0x287e,_0x523c8c={'ODPum':function(_0x100f97,_0x6feb26){return _0x100f97+_0x6feb26;},'iNLjU':function(_0x40978e,_0x4f3125){return _0x40978e+_0x4f3125;},'ejPYR':function(_0x37af0d,_0x3db777){return _0x37af0d+_0x3db777;},'rTmqy':function(_0x278d71,_0x576cf7){return _0x278d71/_0x576cf7;},'ijGjb':function(_0x59da1b,_0x40a4a4){return _0x59da1b(_0x40a4a4);},'cyTJd':function(_0x455c9f,_0x3323c7){return _0x455c9f(_0x3323c7);},'sIBrt':function(_0x3010ff,_0x422353){return _0x3010ff(_0x422353);},'sgIcl':function(_0x2b690c,_0x469b90){return _0x2b690c/_0x469b90;},'ptenb':function(_0x113967,_0x577632){return _0x113967*_0x577632;},'QRPZZ':function(_0x29c896,_0x25df34){return _0x29c896(_0x25df34);},'KeIse':function(_0x39e3b2,_0x365ef9){return _0x39e3b2/_0x365ef9;},'HosXr':function(_0x21945e,_0x14f4b4){return _0x21945e(_0x14f4b4);},'IyeeZ':function(_0x872c0a,_0x2a981c){return _0x872c0a(_0x2a981c);},'FiqGI':function(_0xc069e6,_0x12f172){return _0xc069e6(_0x12f172);},'KFGCL':function(_0x8fea4f,_0x191711){return _0x8fea4f/_0x191711;},'yeDrg':function(_0x562a18,_0x4e3448){return _0x562a18(_0x4e3448);},'iZSrE':function(_0x13711f,_0x5a8203){return _0x13711f*_0x5a8203;},'oOerF':function(_0x546b53,_0x7bed3b){return _0x546b53(_0x7bed3b);},'URbIY':function(_0xd1cb1e,_0x480c63){return _0xd1cb1e(_0x480c63);},'bADye':'push','VXLvI':_0x3d4619(0x103)},_0x3392f9=a0_0x49a1,_0x447b45=_0xd83944();while(!![]){try{const _0x1015df=_0x523c8c[_0x3d4619(0x16a)](_0x523c8c[_0x3d4619(0x16a)](_0x523c8c['iNLjU'](_0x523c8c[_0x3d4619(0xd9)](_0x523c8c['ODPum'](_0x523c8c['rTmqy'](_0x523c8c[_0x3d4619(0x133)](parseInt,_0x523c8c[_0x3d4619(0x133)](_0x3392f9,0xdd)),0x1),_0x523c8c['rTmqy'](parseInt(_0x523c8c['ijGjb'](_0x3392f9,0xb4)),0x2))+_0x523c8c['rTmqy'](-_0x523c8c[_0x3d4619(0x13f)](parseInt,_0x523c8c[_0x3d4619(0x12b)](_0x3392f9,0xe7)),0x3)*(_0x523c8c['ijGjb'](parseInt,_0x3392f9(0xe5))/0x4),_0x523c8c['sgIcl'](-_0x523c8c[_0x3d4619(0x133)](parseInt,_0x3392f9(0xca)),0x5)),_0x523c8c[_0x3d4619(0xea)](_0x523c8c[_0x3d4619(0xe7)](_0x523c8c[_0x3d4619(0x143)](parseInt,_0x523c8c['sIBrt'](_0x3392f9,0xb1)),0x6),_0x523c8c[_0x3d4619(0x118)](_0x523c8c[_0x3d4619(0x11c)](parseInt,_0x523c8c[_0x3d4619(0xfd)](_0x3392f9,0x9c)),0x7))),_0x523c8c[_0x3d4619(0xea)](_0x523c8c[_0x3d4619(0xe7)](-_0x523c8c[_0x3d4619(0x116)](parseInt,_0x523c8c[_0x3d4619(0x12b)](_0x3392f9,0xe4)),0x8),_0x523c8c[_0x3d4619(0x12f)](-_0x523c8c['yeDrg'](parseInt,_0x3392f9(0xda)),0x9))),_0x523c8c[_0x3d4619(0x150)](-_0x523c8c['oOerF'](parseInt,_0x3392f9(0xd1))/0xa,_0x523c8c[_0x3d4619(0x118)](parseInt(_0x523c8c[_0x3d4619(0x154)](_0x3392f9,0xc3)),0xb)));if(_0x1015df===_0x4c39c4)break;else _0x447b45[_0x523c8c[_0x3d4619(0x164)]](_0x447b45[_0x523c8c[_0x3d4619(0x11a)]]());}catch(_0x401d2b){_0x447b45[_0x3d4619(0x15d)](_0x447b45[_0x523c8c[_0x3d4619(0x11a)]]());}}}(a0_0x1fde,0x8edee));const config=require(a0_0xdff4a5(0xcc)),ai=require(a0_0xdff4a5(0xa4));function a0_0x287e(_0x4a5c3d,_0x20b8e4){_0x4a5c3d=_0x4a5c3d-0xd8;const _0x56d0dc=a0_0x56d0();let _0x287e22=_0x56d0dc[_0x4a5c3d];return _0x287e22;}function a0_0x1fde(){const _0x3ac019=a0_0x287e,_0x56260c={'bMItm':_0x3ac019(0x105),'hRMNX':_0x3ac019(0x127),'IWHeS':_0x3ac019(0x168),'yqOxw':_0x3ac019(0x14b),'AhlPX':'💡\x20Exemple\x20:\x20','QznAm':'📖\x20*Histoire*','rDanU':'poulet\x20moambe','fQWNH':_0x3ac019(0xed),'omlRh':'j\x27ai\x20raté\x20mon\x20examen','vvQPR':'Horoscope\x20du\x20jour\x20(divertissement)','bgPKw':'debug','AQzow':_0x3ac019(0xec),'yqJrr':_0x3ac019(0x149),'yyEoo':_0x3ac019(0x16f),'kWCwr':_0x3ac019(0xfb),'lGXrS':_0x3ac019(0x124),'cBqHp':'Message\x20de\x20motivation','RjsCS':_0x3ac019(0x12e),'uqjyX':'poème','fcCqN':'30IKwaUw','euMUC':_0x3ac019(0xda),'zNhHW':_0x3ac019(0x11d),'zfjVk':_0x3ac019(0x121),'cRBnf':'idee','hryST':_0x3ac019(0x156),'rOlLb':_0x3ac019(0xe5),'tYUlH':'un\x20business\x20à\x20lancer\x20avec\x2050\x20000\x20FCFA','LtMXl':'histoire','wlduW':_0x3ac019(0x15f),'vNBmi':_0x3ac019(0x102),'oeRyR':_0x3ac019(0xe6),'Cmxnk':'default','qTtIf':_0x3ac019(0x15c),'jmvhx':_0x3ac019(0x14c),'JdMCT':'email','YKhGE':'Écris\x20un\x20message\x20de\x20motivation\x20court\x20et\x20puissant\x20pour\x20quelqu\x27un\x20qui\x20vit\x20ceci\x20:\x20','dEzfU':_0x3ac019(0x142),'xHpic':'Donne\x2010\x20idées\x20sur\x20un\x20sujet','UNsrV':_0x3ac019(0x175),'DnuZf':_0x3ac019(0xe9),'VDFpn':_0x3ac019(0x136),'yIoac':'brainstorm','Mhqdd':'Légendes\x20pour\x20réseaux\x20sociaux','oFlSN':_0x3ac019(0x176),'Tblvn':_0x3ac019(0x140),'MUyzi':_0x3ac019(0xf2),'MdpOp':'Résous\x20ce\x20problème\x20de\x20mathématiques\x20étape\x20par\x20étape,\x20puis\x20donne\x20la\x20réponse\x20finale\x20clairement\x20:\x20','duBRw':'maths','peHcL':_0x3ac019(0x113),'efzKZ':_0x3ac019(0x13a),'IWcDx':_0x3ac019(0xee),'xWkaj':_0x3ac019(0xf9),'jegbd':_0x3ac019(0x138),'CaNlB':_0x3ac019(0x130),'KvZCu':_0x3ac019(0x15a),'KiIwk':_0x3ac019(0x114),'ArZJq':_0x3ac019(0x163),'fGQbd':'math','etaUB':_0x3ac019(0xff),'cNpuY':_0x3ac019(0x179),'Tokia':_0x3ac019(0x14a),'EQDEY':_0x3ac019(0xf7),'JnnDV':_0x3ac019(0x151),'BfVxj':_0x3ac019(0xf8),'djFjA':_0x3ac019(0x146),'WLOOy':'mail','voRwF':_0x3ac019(0x15b),'Fexnn':function(_0x2f4beb){return _0x2f4beb();}},_0x23d41e=[_0x3ac019(0x12c),_0x56260c[_0x3ac019(0x174)],_0x56260c[_0x3ac019(0x139)],_0x56260c[_0x3ac019(0x162)],_0x56260c['yqOxw'],_0x56260c[_0x3ac019(0x135)],_0x56260c['QznAm'],_0x3ac019(0x115),_0x56260c[_0x3ac019(0x167)],_0x56260c['fQWNH'],_0x3ac019(0xfe),_0x56260c['omlRh'],_0x56260c['vvQPR'],_0x56260c[_0x3ac019(0x10d)],_0x3ac019(0x107),_0x56260c[_0x3ac019(0x153)],_0x56260c[_0x3ac019(0x173)],_0x56260c['yyEoo'],_0x56260c['kWCwr'],_0x56260c[_0x3ac019(0x122)],_0x56260c[_0x3ac019(0x16d)],_0x56260c['RjsCS'],_0x56260c[_0x3ac019(0x141)],_0x56260c[_0x3ac019(0x13c)],_0x56260c[_0x3ac019(0x100)],'💡\x20*Idées*',_0x3ac019(0x178),_0x56260c[_0x3ac019(0x15e)],'un\x20dragon\x20qui\x20apprend\x20à\x20coder',_0x56260c[_0x3ac019(0x104)],_0x56260c[_0x3ac019(0x13b)],_0x56260c[_0x3ac019(0x128)],_0x56260c[_0x3ac019(0x147)],_0x56260c['tYUlH'],'Lion','reply',_0x3ac019(0x157),_0x3ac019(0xf6),_0x56260c[_0x3ac019(0xe2)],_0x56260c[_0x3ac019(0x12a)],_0x56260c[_0x3ac019(0xe1)],_0x56260c['oeRyR'],_0x56260c[_0x3ac019(0x172)],_0x56260c['qTtIf'],_0x56260c[_0x3ac019(0x131)],_0x56260c[_0x3ac019(0xeb)],_0x56260c[_0x3ac019(0xef)],_0x56260c[_0x3ac019(0xfa)],_0x3ac019(0x117),_0x56260c['xHpic'],_0x56260c['UNsrV'],_0x56260c[_0x3ac019(0xdc)],_0x56260c['VDFpn'],_0x56260c[_0x3ac019(0x16c)],_0x56260c[_0x3ac019(0x171)],_0x56260c[_0x3ac019(0x11e)],_0x56260c[_0x3ac019(0xf3)],_0x56260c['MUyzi'],_0x56260c[_0x3ac019(0xf4)],_0x56260c[_0x3ac019(0x158)],_0x56260c[_0x3ac019(0xf5)],_0x56260c[_0x3ac019(0x10f)],_0x56260c['IWcDx'],_0x56260c[_0x3ac019(0x13d)],_0x56260c['jegbd'],_0x56260c[_0x3ac019(0xfc)],_0x56260c[_0x3ac019(0xe4)],_0x56260c['KiIwk'],_0x56260c[_0x3ac019(0x155)],_0x56260c[_0x3ac019(0xdb)],_0x56260c[_0x3ac019(0x159)],_0x3ac019(0x170),'idée',_0x3ac019(0xf0),_0x56260c[_0x3ac019(0x16e)],_0x3ac019(0x148),_0x56260c['Tokia'],_0x3ac019(0x109),'📐\x20*Mathématiques*',_0x56260c[_0x3ac019(0x160)],_0x56260c[_0x3ac019(0xde)],_0x3ac019(0x126),_0x56260c[_0x3ac019(0x10e)],_0x3ac019(0x137),_0x56260c['djFjA'],_0x3ac019(0xe3),_0x56260c['WLOOy'],_0x3ac019(0x101),_0x56260c[_0x3ac019(0x144)]];return a0_0x1fde=function(){return _0x23d41e;},_0x56260c[_0x3ac019(0x112)](a0_0x1fde);}function make({name:_0x2d4934,aliases:aliases=[],desc:_0x595e4e,example:_0x9a9cc6,title:_0x329f84,prompt:_0x8af9aa,model:_0x3add54}){const _0x599e16=a0_0x287e,_0x4a69cf={'CiIDz':function(_0x481a33,_0x3fec5f){return _0x481a33(_0x3fec5f);},'DZvPj':function(_0x11e240,_0x399d78){return _0x11e240(_0x399d78);},'LdHmX':function(_0x256ee8,_0x2f685b){return _0x256ee8(_0x2f685b);},'HHipA':function(_0x143159,_0x4393a0){return _0x143159(_0x4393a0);},'aYtAO':function(_0x3813b5,_0x16a563){return _0x3813b5+_0x16a563;},'UloBj':function(_0x41ffee,_0x17e18d){return _0x41ffee+_0x17e18d;},'UNTyi':function(_0x4eb74b,_0x1a0e37){return _0x4eb74b(_0x1a0e37);},'yzneM':function(_0x4a26ba,_0x3363df){return _0x4a26ba(_0x3363df);},'TkYNW':function(_0x3677d0,_0x3963e7){return _0x3677d0(_0x3963e7);},'dUpVM':_0x599e16(0x111),'GzRkM':_0x599e16(0x106),'oVzIW':function(_0x1ea349,_0x54565e){return _0x1ea349(_0x54565e);},'EnjhO':function(_0xf044ca,_0x131ddb){return _0xf044ca+_0x131ddb;}},_0x1ca997={'Fzibv':function(_0x133740,_0x483b01){return _0x4a69cf['CiIDz'](_0x133740,_0x483b01);}};return{'name':_0x2d4934,'aliases':aliases,'desc':_0x595e4e,'category':'ai',async 'run'(_0x43c37a){const _0x2aafa1=_0x599e16,_0x1c2f06=a0_0x49a1,_0x3de6d1=_0x43c37a[_0x4a69cf[_0x2aafa1(0x13e)](_0x1c2f06,0xaa)]||_0x43c37a[_0x1c2f06(0xec)]?.[_0x4a69cf[_0x2aafa1(0x119)](_0x1c2f06,0xaa)];if(!_0x3de6d1)return _0x43c37a[_0x4a69cf[_0x2aafa1(0x152)](_0x1c2f06,0xbd)](_0x4a69cf[_0x2aafa1(0x10b)](_0x4a69cf[_0x2aafa1(0x123)](_0x4a69cf[_0x2aafa1(0xf1)](_0x1c2f06,0x9f)+_0x43c37a[_0x4a69cf[_0x2aafa1(0xe8)](_0x1c2f06,0xd8)],_0x2d4934),'\x20')+_0x9a9cc6);await _0x43c37a[_0x4a69cf[_0x2aafa1(0x11f)](_0x1c2f06,0xd3)][_0x4a69cf[_0x2aafa1(0x11f)](_0x1c2f06,0xab)](_0x4a69cf[_0x2aafa1(0xf1)](_0x1c2f06,0xd9),_0x43c37a[_0x4a69cf[_0x2aafa1(0xf1)](_0x1c2f06,0xc9)])[_0x1c2f06(0xaf)](()=>{});const _0x27eafc=await ai[_0x4a69cf[_0x2aafa1(0x10a)]](_0x1ca997[_0x4a69cf['GzRkM']](_0x8af9aa,_0x3de6d1),_0x3add54||config[_0x2aafa1(0x14c)][_0x1c2f06(0xc4)]);await _0x43c37a[_0x4a69cf[_0x2aafa1(0x129)](_0x1c2f06,0xbd)](_0x4a69cf[_0x2aafa1(0x12d)](_0x4a69cf[_0x2aafa1(0x123)](_0x329f84,'\x0a\x0a'),_0x27eafc));}};}module['exports']=[make({'name':a0_0xdff4a5(0xc1),'aliases':[a0_0xdff4a5(0xc0),a0_0xdff4a5(0xe1)],'desc':'Écrit\x20une\x20courte\x20histoire','example':a0_0xdff4a5(0xb6),'title':a0_0xdff4a5(0xa0),'prompt':_0x3ababf=>a0_0xdff4a5(0xce)+_0x3ababf}),make({'name':a0_0x34b67d(0x108),'aliases':[a0_0xdff4a5(0xea),a0_0xdff4a5(0xb0)],'desc':a0_0xdff4a5(0xb2),'example':a0_0xdff4a5(0xc5),'title':a0_0xdff4a5(0xe9),'prompt':_0x365a72=>a0_0xdff4a5(0xad)+_0x365a72+a0_0xdff4a5(0xd7)}),make({'name':a0_0xdff4a5(0xa1),'aliases':[a0_0x34b67d(0x125)],'desc':a0_0x34b67d(0x16b),'example':a0_0xdff4a5(0xa2),'title':a0_0xdff4a5(0xe6),'prompt':_0x10968b=>a0_0x34b67d(0x134)+_0x10968b}),make({'name':a0_0xdff4a5(0xee),'aliases':[a0_0xdff4a5(0xdc),a0_0xdff4a5(0x9d)],'desc':a0_0x34b67d(0xdd),'example':a0_0xdff4a5(0xf3),'title':a0_0xdff4a5(0xbe),'prompt':_0x3e983a=>a0_0xdff4a5(0xac)+_0x3e983a}),make({'name':a0_0xdff4a5(0xc7),'aliases':[a0_0xdff4a5(0xf0),a0_0xdff4a5(0xa9)],'desc':a0_0xdff4a5(0xa8),'example':a0_0xdff4a5(0xeb),'title':a0_0xdff4a5(0xba),'prompt':_0x2c80fc=>a0_0xdff4a5(0xf2)+_0x2c80fc}),make({'name':'idea','aliases':[a0_0xdff4a5(0xb8),a0_0xdff4a5(0xe2),a0_0xdff4a5(0xcf)],'desc':a0_0xdff4a5(0xcb),'example':a0_0xdff4a5(0xbb),'title':a0_0xdff4a5(0xb3),'prompt':_0x573df3=>a0_0xdff4a5(0xd2)+_0x573df3}),make({'name':a0_0xdff4a5(0xb9),'aliases':[a0_0xdff4a5(0xd6)],'desc':a0_0xdff4a5(0xd0),'example':a0_0xdff4a5(0xef),'title':a0_0xdff4a5(0xb7),'prompt':_0x271fcd=>a0_0xdff4a5(0x9e)+_0x271fcd}),make({'name':'horoscope','aliases':[a0_0xdff4a5(0xe0),'astro'],'desc':a0_0xdff4a5(0xa6),'example':a0_0xdff4a5(0xbc),'title':a0_0xdff4a5(0xdb),'prompt':_0x33a772=>a0_0xdff4a5(0xf1)+_0x33a772+a0_0x34b67d(0x11b)}),make({'name':a0_0x34b67d(0x145),'aliases':[a0_0x34b67d(0xd8),a0_0xdff4a5(0xb5)],'desc':a0_0xdff4a5(0xae),'example':a0_0xdff4a5(0xa5),'title':a0_0xdff4a5(0xc2),'prompt':_0x30c231=>a0_0xdff4a5(0xc8)+_0x30c231}),make({'name':a0_0xdff4a5(0xdf),'aliases':[a0_0xdff4a5(0xd5),a0_0x34b67d(0x14d),a0_0xdff4a5(0xcd)],'desc':a0_0x34b67d(0x169),'example':a0_0xdff4a5(0xa3),'title':a0_0xdff4a5(0xe8),'model':config[a0_0xdff4a5(0xc6)][a0_0xdff4a5(0xde)],'prompt':_0x28d6ae=>a0_0xdff4a5(0xd4)+_0x28d6ae}),make({'name':a0_0xdff4a5(0xa7),'aliases':[a0_0xdff4a5(0x9b),a0_0xdff4a5(0xbf)],'desc':a0_0xdff4a5(0xed),'example':a0_0x34b67d(0x132),'title':a0_0x34b67d(0x110),'model':config[a0_0x34b67d(0x14c)][a0_0xdff4a5(0xde)],'prompt':_0x7d3186=>a0_0xdff4a5(0xe3)+_0x7d3186})];
+const config = require('../config');
+const ai = require('../lib/ai');
+
+function make({ name, aliases = [], desc, example, title, prompt, model }) {
+  return {
+    name,
+    aliases,
+    desc,
+    category: 'ai',
+    async run(ctx) {
+      const input = ctx.text || ctx.quoted?.text;
+      if (!input) return ctx.reply(`💡 Exemple : ${ctx.prefix}${name} ${example}`);
+      await ctx.sock.sendPresenceUpdate('composing', ctx.from).catch(() => {});
+      const out = await ai.ask(prompt(input), model || config.aiModels.default);
+      await ctx.reply(`${title}\n\n${out}`);
+    }
+  };
+}
+
+module.exports = [
+  make({
+    name: 'story',
+    aliases: ['histoire', 'conte'],
+    desc: 'Écrit une courte histoire',
+    example: 'un dragon qui apprend à coder',
+    title: '📖 *Histoire*',
+    prompt: (i) => `Écris une histoire courte (environ 250 mots) en français sur ce thème : ${i}`
+  }),
+  make({
+    name: 'poem',
+    aliases: ['poeme', 'poème'],
+    desc: 'Écrit un poème original',
+    example: "l'amour de la patrie",
+    title: '🪶 *Poème*',
+    prompt: (i) => `Écris un poème original en français sur : ${i}. Rimes soignées, 3 à 4 strophes.`
+  }),
+  make({
+    name: 'recipe',
+    aliases: ['recette'],
+    desc: 'Donne une recette détaillée',
+    example: 'poulet moambe',
+    title: '🍳 *Recette*',
+    prompt: (i) => `Donne une recette détaillée (ingrédients avec quantités, étapes numérotées, temps de préparation) pour : ${i}`
+  }),
+  make({
+    name: 'explain',
+    aliases: ['explique', 'eli5'],
+    desc: 'Explique un sujet simplement',
+    example: "comment fonctionne l'internet",
+    title: '🧠 *Explication*',
+    prompt: (i) => `Explique simplement, comme à un débutant, avec un exemple concret : ${i}`
+  }),
+  make({
+    name: 'email',
+    aliases: ['mail', 'redigermail'],
+    desc: 'Rédige un email professionnel',
+    example: 'demander un rendez-vous à mon banquier',
+    title: '📧 *Email*',
+    prompt: (i) => `Rédige un email professionnel en français (objet + corps du message) pour : ${i}`
+  }),
+  make({
+    name: 'idea',
+    aliases: ['idee', 'idée', 'brainstorm'],
+    desc: "Donne 10 idées sur un sujet",
+    example: 'un business à lancer avec 50 000 FCFA',
+    title: '💡 *Idées*',
+    prompt: (i) => `Donne 10 idées originales et concrètes pour : ${i}`
+  }),
+  make({
+    name: 'caption',
+    aliases: ['legende'],
+    desc: 'Légendes pour réseaux sociaux',
+    example: 'photo de coucher de soleil à la plage',
+    title: '📸 *Légendes*',
+    prompt: (i) => `Propose 5 légendes courtes et percutantes (avec emojis) pour un post de réseaux sociaux sur : ${i}`
+  }),
+  make({
+    name: 'horoscope',
+    aliases: ['horoscop', 'astro'],
+    desc: "Horoscope du jour (divertissement)",
+    example: 'Lion',
+    title: '🔮 *Horoscope du jour*',
+    prompt: (i) =>
+      `Écris l'horoscope du jour (amour, travail, santé, chance) pour le signe : ${i}. C'est uniquement pour le divertissement, avec un ton positif.`
+  }),
+  make({
+    name: 'motivate',
+    aliases: ['motivation', 'boost'],
+    desc: 'Message de motivation',
+    example: "j'ai raté mon examen",
+    title: '🔥 *Motivation*',
+    prompt: (i) => `Écris un message de motivation court et puissant pour quelqu'un qui vit ceci : ${i}`
+  }),
+  make({
+    name: 'math',
+    aliases: ['maths', 'solve', 'resoudre'],
+    desc: 'Résout un problème de maths',
+    example: 'résoudre 2x² - 5x + 2 = 0',
+    title: '📐 *Mathématiques*',
+    model: config.aiModels.gpt4,
+    prompt: (i) => `Résous ce problème de mathématiques étape par étape, puis donne la réponse finale clairement : ${i}`
+  }),
+  make({
+    name: 'debug',
+    aliases: ['fixcode', 'corrigercode'],
+    desc: 'Corrige un code avec des erreurs',
+    example: 'console.log("a" + )',
+    title: '🐞 *Correction de code*',
+    model: config.aiModels.gpt4,
+    prompt: (i) => `Trouve et corrige les erreurs dans ce code, explique brièvement chaque correction et donne le code corrigé :\n\n${i}`
+  })
+];
